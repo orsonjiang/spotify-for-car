@@ -1,26 +1,58 @@
 import axios from 'axios';
-import queryString from 'query-string';
+import qs from 'qs';
 
-const api = axios.create({
+let api = axios.create({
     baseURL: 'https://api.spotify.com/v1',
     headers: {
-        Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`
+        Authorization: `Bearer `
     }
 })
 
-export const getCurrentQueue = () => {
-    return api.get("/me/player/queue");
+const refresh_token = async () => {
+    const config = {
+        method: 'post',
+        url: 'https://accounts.spotify.com/api/token',
+        headers: {
+            'Authorization': 'Basic YmNkYTMwMjk3NTkzNDYwMmFiZTkzYjdjODBhNzZjNzk6ZjQxYjExYjVlOTAwNDU5OThhMGFjYjc5NGYyNDAxYjc=',
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        data: qs.stringify({
+            'grant_type': 'refresh_token',
+            'refresh_token': user.refreshToken,
+        })
+    };
+
+    try {
+        let response = await axios(config);
+        api = axios.create({
+            baseURL: 'https://api.spotify.com/v1',
+            headers: {
+                Authorization: `Bearer ${response.data.access_token}`
+            }
+        })
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+export const getCurrentQueue = async () => {
+    try {
+        return await api.get("/me/player/queue");
+    } catch {
+        await refresh_token();
+        return await api.get("/me/player/queue");
+    }
 }
 
 export const searchSongs = (text) => {
-    return api.get("/search?" + queryString.stringify({
+    return api.get("/search?" + qs.stringify({
         q: text,
         type: "track",
     }));
 }
 
 export const addSongToQueue = (id) => {
-    return api.post("/me/player/queue?" + queryString.stringify({
+    return api.post("/me/player/queue?" + qs.stringify({
         uri: `spotify:track:${id}`
     }));
 }
