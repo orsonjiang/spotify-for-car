@@ -90,10 +90,27 @@ function App() {
                     <li
                         key={track.id}
                         id={track.id}
-                        className={"song-card"}
+                        className={
+                            "flex bg-zinc-100 dark:bg-zinc-900 rounded-xl m-2"
+                        }
                         onClick={handleAddSong}
                     >
-                        {track.name} by {track.album.artists[0].name}
+                        <img
+                            className={"m-2 w-12 h-12"}
+                            src={track.album.images[0].url}
+                            id={track.id}
+                        />
+                        <div
+                            className="flex flex-col text-left mt-2"
+                            id={track.id}
+                        >
+                            <p className="text-base font-normal" id={track.id}>
+                                {track.name}
+                            </p>
+                            <p className="text-sm font-light" id={track.id}>
+                                {track.album.artists[0].name}
+                            </p>
+                        </div>
                     </li>
                 ))}
             </ul>
@@ -105,35 +122,56 @@ function App() {
         if (store.currentSong.id == store.queue[0].id) {
             store.queue.shift();
         }
-        let currentSongClassName =
-            store.lastAdded == store.currentSong.id
-                ? "queue-card highlighted"
-                : "queue-card";
+        let currentCardClassName =
+            "flex bg-zinc-100 dark:bg-zinc-900 rounded-xl m-2";
+        if (store.lastAdded == store.currentSong.id)
+            currentCardClassName += " border border-blue-600";
+
         queue = (
             <div>
                 <h3 className="text-3xl mb-2">Current Song</h3>
                 <ul>
                     <li
                         key={store.currentSong.id}
-                        className={currentSongClassName}
+                        className={currentCardClassName}
                     >
-                        {store.currentSong.name} by{" "}
-                        {store.currentSong.album.artists[0].name}
+                        <img
+                            className={"m-2 w-12 h-12"}
+                            src={store.currentSong.album.images[0].url}
+                        />
+                        <div className="flex flex-col text-left mt-2">
+                            <p className="text-base font-normal">
+                                {store.currentSong.name}
+                            </p>
+                            <p className="text-sm font-light">
+                                {store.currentSong.album.artists[0].name}
+                            </p>
+                        </div>
                     </li>
                 </ul>
                 <h3 className="text-3xl mt-4 mb-2">Current Queue</h3>
                 <ul>
                     {store.queue.map((track) => {
-                        return track.id == store.lastAdded ? (
-                            <li
-                                key={track.id}
-                                className={"queue-card highlighted"}
-                            >
-                                {track.name} by {track.album.artists[0].name}
-                            </li>
-                        ) : (
-                            <li key={track.id} className={"queue-card"}>
-                                {track.name} by {track.album.artists[0].name}
+                        let cardClassName =
+                            "flex bg-zinc-100 dark:bg-zinc-900 rounded-xl m-2";
+
+                        if (track.id == store.lastAdded)
+                            cardClassName += " border border-blue-600";
+
+                        return (
+                            <li key={track.id} className={cardClassName}>
+                                <img
+                                    className={"m-2 w-12 h-12"}
+                                    src={track.album.images[0].url}
+                                />
+                                <div className="flex flex-col text-left mt-2">
+                                    <p className="text-base font-normal">
+                                        {track.name}
+                                    </p>
+                                    <p className="text-sm font-light">
+                                        {track.album.artists[0].name}
+                                    </p>
+                                </div>
                             </li>
                         );
                     })}
@@ -168,7 +206,9 @@ function App() {
             {songs}
 
             <h2 className="text-4xl mt-16 mb-2">Song View</h2>
-            <button className="mb-4"onClick={handleGetQueue}>Reload Songs</button>
+            <button className="mb-4" onClick={handleGetQueue}>
+                Reload Songs
+            </button>
             {queue}
         </div>
     );
