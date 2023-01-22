@@ -12,7 +12,7 @@ const app = express();
 // SETUP THE MIDDLEWARE
 app.use(express.urlencoded({ extended: true }))
 app.use(cors({
-    origin: ["http://localhost:5173"],
+    origin: ["http://localhost:"+PORT],
     credentials: true
 }))
 app.use(express.json())
@@ -21,6 +21,9 @@ app.use(cookieParser())
 // SETUP OUR OWN ROUTERS AS MIDDLEWARE
 const authRouter = require('./routes/auth-router')
 app.use('/auth', authRouter)
+
+const apiRouter = require('./routes/api-router')
+app.use('/api', apiRouter)
 
 // INITIALIZE OUR DATABASE OBJECT
 const db = require('./db')
