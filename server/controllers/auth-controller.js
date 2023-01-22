@@ -15,7 +15,7 @@ const login = (req, res) => {
     res.redirect('https://accounts.spotify.com/authorize?' + query);
 }
 
-const callback = async (req, res) => {
+const loginCallback = async (req, res) => {
     try {
         const credReq = await axios({
             method: 'post',
@@ -71,5 +71,5 @@ const callback = async (req, res) => {
 
 module.exports = {
     login,
-    callback,
+    loginCallback,
 }
