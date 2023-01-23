@@ -52,22 +52,48 @@ const getQueue = async (user) => {
     }
 }
 
-// const searchSongs = (text) => {
-//     return api.get("/search?" + qs.stringify({
-//         q: text,
-//         type: "track",
-//     }));
-// }
+const search = async (user, q) => {
+	await updateAccessToken(user);
+    try {
+		const response = await axios({
+			method: 'get',
+			url: 'https://api.spotify.com/v1/search?' + qs.stringify({
+				q: q,
+				type: "track"
+			}),
+			headers: {
+				'Authorization': `Bearer ${user.accessToken}`,
+			},
+		});
+		return response.data;
+    } catch (err) {
+		console.log(err)
+		return null;
+    }
+}
 
-// const addSongToQueue = (id) => {
-//     return api.post("/me/player/queue?" + qs.stringify({
-//         uri: `spotify:track:${id}`
-//     }));
-// }
+const addToQueue = async (user, id) => {
+	await updateAccessToken(user);
+	console.log(id)
+    try {
+		await axios({
+			method: 'post',
+			url: 'https://api.spotify.com/v1/me/player/queue?' + qs.stringify({
+				uri: `spotify:track:${id}`,
+			}),
+			headers: {
+				'Authorization': `Bearer ${user.accessToken}`,
+			},
+		});
+		return true;
+    } catch (err) {
+		console.log(err)
+		return false;
+    }
+}
 
 module.exports = {
-	updateAccessToken,
     getQueue,
-    // searchSongs,
-    // addSongToQueue,
+    search,
+    addToQueue,
 }

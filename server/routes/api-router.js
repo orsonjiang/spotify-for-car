@@ -3,5 +3,7 @@ const router = express.Router();
 const ApiController = require("../controllers/api-controller");
 
 router.get("/:url/queue", ApiController.getQueue);
+router.get("/:url/search", ApiController.search);
+router.post("/:url/add", ApiController.addToQueue);
 
 module.exports = router;
