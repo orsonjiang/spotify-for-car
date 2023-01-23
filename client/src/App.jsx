@@ -191,6 +191,7 @@ function App() {
     return (
         <div className="App">
             <h1 className="text-5xl m-16">Spotify for Car</h1>
+            <a href="http://localhost:4000/auth/login" class="">Login</a>
             <h2 className="text-4xl mb-2">Song Search</h2>
             <div className="m-2">
                 <input
