@@ -7,6 +7,7 @@ const UserSchema = new Schema(
         email: { type: String, required: true },
         id: { type: String, required: true },
         refreshToken: { type: String, required: true },
+        url: { type: String, required: true },
     },
     { timestamps: true }
 );
