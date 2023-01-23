@@ -17,6 +17,8 @@ const login = (req, res) => {
 
 const loginCallback = async (req, res) => {
     try {
+        let date = new Date();
+
         const credReq = await axios({
             method: 'post',
             url: 'https://accounts.spotify.com/api/token',
@@ -31,6 +33,8 @@ const loginCallback = async (req, res) => {
             })
         });
 
+        date.setSeconds(date.getSeconds() + credReq.data.expires_in)
+
         const profileReq = await axios({
             method: 'get',
             url: 'https://api.spotify.com/v1/me',
@@ -39,11 +43,11 @@ const loginCallback = async (req, res) => {
             },
         });
 
-        let id = '';
+        let _id = '';
 
-        const existingUser = await User.findOne({ email: profileReq.data.email });
+        const existingUser = await User.findOne({ id: profileReq.data.id });
         if (existingUser) {
-            id = existingUser._id;
+            _id = existingUser._id;
         } else {
             const newUser = new User({
                 displayName: profileReq.data.display_name,
@@ -51,13 +55,14 @@ const loginCallback = async (req, res) => {
                 id: profileReq.data.id,
                 accessToken: credReq.data.access_token,
                 refreshToken: credReq.data.refresh_token,
+                expiresIn: date,
                 url: profileReq.data.id,
             });
             const savedUser = await newUser.save();
-            id = savedUser._id;
+            _id = savedUser._id;
         }
 
-        res.cookie("token", auth.signToken(id), {
+        res.cookie("token", auth.signToken(_id), {
             httpOnly: true,
             secure: true,
             sameSite: true,
@@ -71,7 +76,17 @@ const loginCallback = async (req, res) => {
     }
 }
 
+logout = async (req, res) => {
+    res.cookie("token", "", {
+        httpOnly: true,
+        secure: true,
+        sameSite: false,
+        expires: new Date(0),
+    }).send();
+};
+
 module.exports = {
     login,
     loginCallback,
+    logout,
 }

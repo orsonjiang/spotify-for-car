@@ -8,6 +8,7 @@ const UserSchema = new Schema(
         id: { type: String, required: true },
         accessToken: { type: String, required: true },
         refreshToken: { type: String, required: true },
+        expiresIn: { type: Date, required: true },
         url: { type: String, required: true },
     },
     { timestamps: true }
