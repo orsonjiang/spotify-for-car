@@ -49,7 +49,9 @@ const loginCallback = async (req, res) => {
                 displayName: profileReq.data.display_name,
                 email: profileReq.data.email,
                 id: profileReq.data.id,
+                accessToken: credReq.data.access_token,
                 refreshToken: credReq.data.refresh_token,
+                url: profileReq.data.id,
             });
             const savedUser = await newUser.save();
             id = savedUser._id;
