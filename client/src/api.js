@@ -57,10 +57,15 @@ export const addSongToQueue = (id) => {
     }));
 }
 
+export const searchMe = (text) => {
+    return api.get("/me");
+}
+
 const apis = {
     getCurrentQueue,
     searchSongs,
     addSongToQueue,
+    searchMe,
 }
 
 export default apis;

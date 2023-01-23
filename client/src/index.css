@@ -53,41 +53,6 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-.song-card {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  margin: 0.5em;
-  padding: 0.6em 1.2em;
-  font-size: 0.6em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-.song-card:hover {
-  border-color: #646cff;
-}
-.song-card:focus,
-.song-card:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-.queue-card {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  margin: 0.5em;
-  padding: 0.6em 1.2em;
-  font-size: 0.6em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  transition: border-color 0.25s;
-}
-.queue-card.highlighted {
-  border-color: #646cff;
-}
-
 input {
   border-radius: 8px;
   border: 1px solid transparent;
