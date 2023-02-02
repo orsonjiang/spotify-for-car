@@ -74,7 +74,6 @@ const search = async (user, q) => {
 
 const addToQueue = async (user, id) => {
 	await updateAccessToken(user);
-	console.log(id)
     try {
 		await axios({
 			method: 'post',
