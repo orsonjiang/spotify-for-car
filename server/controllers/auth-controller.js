@@ -52,7 +52,7 @@ const loginCallback = async (req, res) => {
             const newUser = new User({
                 displayName: profileReq.data.display_name,
                 email: profileReq.data.email,
-                id: profileReq.data.id,
+                spotifyId: profileReq.data.id,
                 accessToken: credReq.data.access_token,
                 refreshToken: credReq.data.refresh_token,
                 expiresIn: date,
