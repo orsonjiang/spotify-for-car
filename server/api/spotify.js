@@ -35,16 +35,21 @@ const updateAccessToken = async (user) => {
 	}
 }
 
+const buildRequest = (user) => {
+	const instance = axios.create({
+		baseURL: "https://api.spotify.com/v1/",
+		headers: {
+			'Authorization': `Bearer ${user.accessToken}`,
+		},
+	})
+	return instance;
+}
+
 const getQueue = async (user) => {
 	await updateAccessToken(user);
     try {
-		const response = await axios({
-			method: 'get',
-			url: 'https://api.spotify.com/v1/me/player/queue',
-			headers: {
-				'Authorization': `Bearer ${user.accessToken}`,
-			},
-		});
+		const api = buildRequest(user);
+		const response = await api.get("/me/player/queue")
 		return response.data;
     } catch (err) {
 		console.log(err)
@@ -55,16 +60,11 @@ const getQueue = async (user) => {
 const search = async (user, q) => {
 	await updateAccessToken(user);
     try {
-		const response = await axios({
-			method: 'get',
-			url: 'https://api.spotify.com/v1/search?' + qs.stringify({
-				q: q,
-				type: "track"
-			}),
-			headers: {
-				'Authorization': `Bearer ${user.accessToken}`,
-			},
-		});
+		const api = buildRequest(user);
+		const response = await api.get("/search" + qs.stringify({
+			q: q,
+			type: "track"
+		}))
 		return response.data;
     } catch (err) {
 		console.log(err)
@@ -75,16 +75,11 @@ const search = async (user, q) => {
 const addToQueue = async (user, id) => {
 	await updateAccessToken(user);
     try {
-		await axios({
-			method: 'post',
-			url: 'https://api.spotify.com/v1/me/player/queue?' + qs.stringify({
-				uri: `spotify:track:${id}`,
-			}),
-			headers: {
-				'Authorization': `Bearer ${user.accessToken}`,
-			},
-		});
-		return true;
+		const api = buildRequest(user);
+		const response = await api.post("/me/player/queue?"+ qs.stringify({
+			uri: `spotify:track:${id}`,
+		}))
+		return response.data;
     } catch (err) {
 		console.log(err)
 		return false;
