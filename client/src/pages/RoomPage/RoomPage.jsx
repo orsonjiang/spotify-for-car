@@ -21,12 +21,12 @@ const RoomPage = () => {
     let queue = "";
     const queueData = useSelector((state) => state.queue);
 
-    if (queueData.length) {
+    if (queueData) {
         queue = (
             <div>
                 <h3 className="text-3xl mt-4 mb-2">Current Queue</h3>
                 <ul>
-                    {queueData.map((track) => {
+                    {queueData.queue.map((track) => {
                         let cardClassName =
                             "flex bg-zinc-100 dark:bg-zinc-900 rounded-xl m-2";
 
