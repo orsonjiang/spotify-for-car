@@ -76,7 +76,7 @@ const loginCallback = async (req, res) => {
     }
 }
 
-logout = async (req, res) => {
+const logout = async (req, res) => {
     res.cookie("token", "", {
         httpOnly: true,
         secure: true,
@@ -85,8 +85,38 @@ logout = async (req, res) => {
     }).send();
 };
 
+const profile = async (req, res) => {
+	if (!req.userId) {
+		res.status(400).json({
+			user: null,
+			errorMessage: "Unauthorized",
+		});
+	}
+
+	User.findOne({ _id: req.userId }, async (err, user) => {
+		if (err) {
+			res.status(400).json({
+				user: null,
+				errorMessage: "Unauthorized",
+			});
+		}
+
+		res.set("Access-Control-Allow-Origin", "http://localhost:5173")
+
+		res.status(200).json({
+			user: {
+				displayName: user.displayName,
+				url: user.url,
+			},
+		});
+
+		res.end();
+	})
+}
+
 module.exports = {
     login,
     loginCallback,
     logout,
+    profile,
 }
