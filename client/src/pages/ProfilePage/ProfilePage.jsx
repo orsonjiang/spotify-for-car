@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import api from "../../api/api";
+import auth from "../../api/authApi";
 
 const ProfilePage = () => {
 	const [user, setUser] = useState("");
 
 	useEffect(() => {
 		const fetchUrl = async () => {
-			const response = await api.getProfile();
+			const response = await auth.getProfile();
 			console.log(response.data.user)
 			setUser(response.data.user)
 		}
