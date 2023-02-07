@@ -7,7 +7,6 @@ const ProfilePage = () => {
 	useEffect(() => {
 		const fetchUrl = async () => {
 			const response = await auth.getProfile();
-			console.log(response.data.user)
 			setUser(response.data.user)
 		}
 
