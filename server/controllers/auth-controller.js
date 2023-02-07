@@ -101,7 +101,7 @@ const profile = async (req, res) => {
 			});
 		}
 
-		res.set("Access-Control-Allow-Origin", "http://localhost:5173")
+		res.set("Access-Control-Allow-Origin", "http://localhost:5173");
 
 		res.status(200).json({
 			user: {
