@@ -10,6 +10,7 @@ const getQueue = async (req, res) => {
 
 		const queue = await api.getQueue(user);
 
+		res.set("Access-Control-Allow-Origin", "http://localhost:5173");
 		res.status(200).json(queue);
 	})
 }
@@ -22,6 +23,7 @@ const search = async (req, res) => {
 
 		const results = await api.search(user, req.query.q);
 
+		res.set("Access-Control-Allow-Origin", "http://localhost:5173");
 		res.status(200).json(results);
 	})
 }
@@ -35,6 +37,7 @@ const addToQueue = async (req, res) => {
 		const response = await api.addToQueue(user, req.query.id);
 
 		if (response) {
+			res.set("Access-Control-Allow-Origin", "http://localhost:5173");
 			res.status(200);
 		} else {
 			res.status(400);
