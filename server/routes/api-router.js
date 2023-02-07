@@ -6,6 +6,5 @@ const auth = require("../auth")
 router.get("/:url/queue", ApiController.getQueue);
 router.get("/:url/search", ApiController.search);
 router.post("/:url/add", ApiController.addToQueue);
-router.get("/profile", auth.verify, ApiController.profile);
 
 module.exports = router;
