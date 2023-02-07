@@ -44,33 +44,8 @@ const addToQueue = async (req, res) => {
 	})
 }
 
-const profile = async (req, res) => {
-	User.findOne({ _id: req.userId }, async (err, user) => {
-		if (err || !req.query || !req.query.id) {
-			return res.status(400);
-		}
-
-		if (response) {
-			res.status(200).json({
-				user: {
-					displayName: user.displayName,
-					url: user.url,
-				},
-			});
-		} else {
-			res.status(400).json({
-				user: null,
-				errorMessage: "Unauthorized",
-			});
-		}
-
-		res.end();
-	})
-}
-
 module.exports = {
 	getQueue,
 	search,
 	addToQueue,
-	profile,
 }
