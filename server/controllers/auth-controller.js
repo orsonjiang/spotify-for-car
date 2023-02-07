@@ -45,7 +45,7 @@ const loginCallback = async (req, res) => {
 
         let _id = '';
 
-        const existingUser = await User.findOne({ id: profileReq.data.id });
+        const existingUser = await User.findOne({ spotifyId: profileReq.data.id });
         if (existingUser) {
             _id = existingUser._id;
         } else {
