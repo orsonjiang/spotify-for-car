@@ -8,10 +8,10 @@ const api = axios.create({
 })
 
 const getQueue = (id) => api.get(`/${id}/queue`);
-const search = (id, text) => api.get(`/${id}/search` + qs.stringify({
+const search = (id, text) => api.get(`/${id}/search?` + qs.stringify({
 	q: text
 }));
-const addToQueue = (id, trackId) => api.post(`/${id}/add` + qs.stringify({
+const addToQueue = (id, trackId) => api.post(`/${id}/add?` + qs.stringify({
 	id: trackId
 }));
 
