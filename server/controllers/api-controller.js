@@ -11,7 +11,10 @@ const getQueue = async (req, res) => {
 		const queue = await api.getQueue(user);
 
 		res.set("Access-Control-Allow-Origin", "http://localhost:5173");
-		res.status(200).json(queue);
+		res.status(200).json({
+			currentSong: queue.currently_playing,
+			queue: queue.queue
+		});
 	})
 }
 

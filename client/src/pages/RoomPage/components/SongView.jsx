@@ -42,12 +42,12 @@ const SongView = () => {
     };
 
     let CurrentView = "";
-    if (queueData && queueData.currently_playing) {
+    if (queueData.currentSong) {
         CurrentView = (
             <div>
                 <div>
                     <div className="mt-4 mb-2 text-3xl">Current Song</div>
-                    {getSongCard(queueData.currently_playing)}
+                    {getSongCard(queueData.currentSong)}
                 </div>
                 <div>
                     <div className="mt-4 mb-2 text-3xl">Current Queue</div>
