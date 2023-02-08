@@ -1,6 +1,6 @@
 import { SET_QUEUE } from "../constants/action-types";
 
-const queue = (state = [], action) => {
+const queue = (state = null, action) => {
 	switch (action.type) {
 		case SET_QUEUE:
 			return action.payload;
