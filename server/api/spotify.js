@@ -61,7 +61,7 @@ const search = async (user, q) => {
 	await updateAccessToken(user);
     try {
 		const api = buildRequest(user);
-		const response = await api.get("/search" + qs.stringify({
+		const response = await api.get("/search?" + qs.stringify({
 			q: q,
 			type: "track"
 		}))
