@@ -3,7 +3,7 @@ import { SET_QUEUE } from "../constants/action-types";
 const initialState = {
 	currentSong: null,
 	queue: []
-}
+};
 
 const queue = (state = initialState, action) => {
 	switch (action.type) {
@@ -13,6 +13,6 @@ const queue = (state = initialState, action) => {
 		default:
 			return state;
 	}
-}
+};
 
 export default queue;
