@@ -23,7 +23,7 @@ const refreshAccessToken = async (user) => {
 		user.expiresIn = date;
 		await user.save();
     } catch (err) {
-        console.log(err)
+        // console.log(err)
     }
 }
 
@@ -52,7 +52,7 @@ const getQueue = async (user) => {
 		const response = await api.get("/me/player/queue")
 		return response.data;
     } catch (err) {
-		console.log(err)
+		// console.log(err)
 		return null;
     }
 }
@@ -67,7 +67,7 @@ const search = async (user, q) => {
 		}))
 		return response.data;
     } catch (err) {
-		console.log(err)
+		// console.log(err)
 		return null;
     }
 }
@@ -81,7 +81,7 @@ const addToQueue = async (user, id) => {
 		}))
 		return true;
     } catch (err) {
-		console.log(err)
+		// console.log(err)
 		return false;
     }
 }
