@@ -76,10 +76,10 @@ const addToQueue = async (user, id) => {
 	await updateAccessToken(user);
     try {
 		const api = buildRequest(user);
-		const response = await api.post("/me/player/queue?"+ qs.stringify({
+		await api.post("/me/player/queue?"+ qs.stringify({
 			uri: `spotify:track:${id}`,
 		}))
-		return response.data;
+		return true;
     } catch (err) {
 		console.log(err)
 		return false;

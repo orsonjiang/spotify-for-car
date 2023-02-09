@@ -39,8 +39,8 @@ const addToQueue = async (req, res) => {
 
 		const response = await api.addToQueue(user, req.query.id);
 
+		res.set("Access-Control-Allow-Origin", "http://localhost:5173");
 		if (response) {
-			res.set("Access-Control-Allow-Origin", "http://localhost:5173");
 			res.status(200);
 		} else {
 			res.status(400);
