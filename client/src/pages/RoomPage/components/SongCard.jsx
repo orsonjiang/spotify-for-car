@@ -1,16 +1,16 @@
 import { useSelector } from "react-redux";
 
 const SongCard = (props) => {
-	const { song } = props; 
-	const lastAdded = useSelector((state) => state.lastAdded);
+	const { song, onClick } = props; 
+	const addedSong = useSelector((state) => state.search.addedSong);
 
 	let className = "flex bg-zinc-100 dark:bg-zinc-900 rounded-xl m-2";
-	if (song.id == lastAdded) {
+	if (song.id == addedSong) {
 		className += " border border-blue-600";
 	}
 
 	return (
-		<li key={song.id} className={className}>
+		<li key={song.id} className={className} onClick={onClick ? () => onClick(song.id) : undefined}>
 			<img
 				className={"m-2 h-12 w-12"}
 				src={song.album.images[0].url}

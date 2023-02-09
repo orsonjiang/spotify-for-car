@@ -32,7 +32,7 @@ const SongView = () => {
                     <div className="mt-4 mb-2 text-3xl">Current Queue</div>
                     <ul>
                         {queueData.queue.map((song) => {
-                            return (<SongCard key={song.id} song={song} />);
+                            return (<SongCard key={"queue-" + song.id} song={song} />);
                         })}
                     </ul>
                 </div>

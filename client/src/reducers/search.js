@@ -1,8 +1,9 @@
-import { SET_SEARCH_TEXT, SET_SEARCH_RESULTS } from "../constants/action-types";
+import { SET_SEARCH_TEXT, SET_SEARCH_RESULTS, SET_ADDED_SONG } from "../constants/action-types";
 
 const initialState = {
 	text: "",
-	results: []
+	results: [],
+	addedSong: "",
 }
 
 const search = (state = initialState, action) => {
@@ -18,6 +19,12 @@ const search = (state = initialState, action) => {
 				... state,
 				text: "",
 				results: action.payload
+			}
+		case SET_ADDED_SONG:
+			return {
+				... state,
+				results: [],
+				addedSong: action.payload
 			}
 
 		default:
