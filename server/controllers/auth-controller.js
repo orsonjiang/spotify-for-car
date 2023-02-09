@@ -3,6 +3,8 @@ const qs = require('qs');
 const User = require("../models/user-model");
 const auth = require("../auth");
 
+require('dotenv').config();
+
 const login = (req, res) => {
     const scope = ['user-read-playback-state', 'user-modify-playback-state', 'user-read-private', 'user-read-email'].join(" ");
     const query = qs.stringify({
@@ -67,7 +69,7 @@ const loginCallback = async (req, res) => {
             secure: true,
             sameSite: true,
         })
-        res.redirect("http://localhost:5173/profile");
+        res.redirect(`${process.env.CLIENT_URL}/profile`);
 
     } catch (err) {
         return res.status(400).json({
@@ -101,7 +103,7 @@ const profile = async (req, res) => {
 			});
 		}
 
-		res.set("Access-Control-Allow-Origin", "http://localhost:5173");
+		res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
 
 		res.status(200).json({
 			user: {

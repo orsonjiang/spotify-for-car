@@ -3,7 +3,7 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 
 const api = axios.create({
-	baseURL: "http://localhost:4000/auth"
+	baseURL: `${import.meta.env.VITE_SERVER_URL}/auth`
 })
 
 const getProfile = () => api.get(`/profile`);

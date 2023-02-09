@@ -14,7 +14,7 @@ const ProfilePage = () => {
 
 	}, [user.displayName, user.url])
 
-	const url = `http://localhost:5173/${user.url}`
+	const url = `${import.meta.env.VITE_CLIENT_URL}/${user.url}`
 
     return (
         <div className="flex min-h-screen flex-col justify-center bg-neutral-50 text-center text-neutral-900 dark:bg-neutral-800 dark:text-neutral-50">
