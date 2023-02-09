@@ -1,6 +1,7 @@
-const auth = require("../auth");
 const User = require("../models/user-model");
 const api = require("../api/spotify");
+
+require('dotenv').config();
 
 const getQueue = async (req, res) => {
 	User.findOne({ url: req.params.url }, async (err, user) => {
@@ -10,7 +11,7 @@ const getQueue = async (req, res) => {
 
 		const queue = await api.getQueue(user);
 
-		res.set("Access-Control-Allow-Origin", "http://localhost:5173");
+		res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
 		res.status(200).json({
 			currentSong: queue.currently_playing,
 			queue: queue.queue
@@ -26,7 +27,7 @@ const search = async (req, res) => {
 
 		const results = await api.search(user, req.query.q);
 
-		res.set("Access-Control-Allow-Origin", "http://localhost:5173");
+		res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
 		res.status(200).json(results);
 	})
 }
@@ -39,7 +40,7 @@ const addToQueue = async (req, res) => {
 
 		const response = await api.addToQueue(user, req.query.id);
 
-		res.set("Access-Control-Allow-Origin", "http://localhost:5173");
+		res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
 		if (response) {
 			res.status(200);
 		} else {
