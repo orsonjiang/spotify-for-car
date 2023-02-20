@@ -49,7 +49,7 @@ const SongSearch = () => {
                 onChange={handleUpdateText}
                 onKeyDown={handleKeyDown}
                 value={text}
-                className="bg-inherit"
+                className="bg-neutral-100 dark:bg-neutral-700"
             ></input>
             <button onClick={handleSearch}>Search</button>
         </div>
