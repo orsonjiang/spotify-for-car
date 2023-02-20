@@ -49,7 +49,7 @@ const SongSearch = () => {
                 onChange={handleUpdateText}
                 onKeyDown={handleKeyDown}
                 value={text}
-                className="bg-neutral-100 dark:bg-neutral-700"
+                className="rounded-lg py-2 px-2 m-2 bg-zinc-200 dark:bg-zinc-900"
             ></input>
             <button onClick={handleSearch}>Search</button>
         </div>
