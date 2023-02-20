@@ -4,7 +4,7 @@ const SongCard = (props) => {
 	const { song, onClick } = props; 
 	const addedSong = useSelector((state) => state.search.addedSong);
 
-	let className = "flex bg-zinc-100 dark:bg-zinc-900 rounded-xl m-2";
+	let className = "flex bg-zinc-200 dark:bg-zinc-900 rounded-xl m-2";
 	if (song.id == addedSong) {
 		className += " border border-blue-600";
 	}
