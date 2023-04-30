@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import Header from "../components/Header";
 import SongView from "./components/SongView";
 import SongSearch from "./components/SongSearch";
 
@@ -7,7 +8,7 @@ const RoomPage = () => {
 
     return (
         <div>
-            <div className="m-16 text-5xl">Spotify for Car</div>
+            <Header />
             <div>Room {roomId}</div>
             <SongSearch />
             <SongView />
