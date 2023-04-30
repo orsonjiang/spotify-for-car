@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Header from "../components/Header";
 import auth from '../../api/authApi';
 
 const ProfilePage = () => {
@@ -35,7 +36,7 @@ const ProfilePage = () => {
         const url = `${import.meta.env.VITE_CLIENT_URL}/${user.url}`;
         content = (
             <div>
-                <div>Welcome {user.displayName}</div>
+                <div className='md-8 text-3xl'>{user.displayName}</div>
                 <div className="break-all px-32">
                     URL: <a href={url}>{url}</a>
                 </div>
@@ -45,7 +46,7 @@ const ProfilePage = () => {
 
     return (
         <div>
-            <div className="m-16 text-5xl">Spotify for Car</div>
+            <Header />
             {content}
         </div>
     );
