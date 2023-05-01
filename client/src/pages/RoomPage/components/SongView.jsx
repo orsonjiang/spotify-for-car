@@ -1,29 +1,16 @@
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useSelector } from 'react-redux';
 
-import { setQueue } from "../../../actions/index";
-import store from "../../../store";
-import api from "../../../api/api";
-import SongCard from "./SongCard";
+import SongCard from './SongCard';
 
 const SongView = () => {
-    const { roomId } = useParams();
     const queueData = useSelector((state) => state.queue);
 
-    useEffect(() => {
-        fetchQueue();
-    }, []);
+    let i = 0;
 
-    const fetchQueue = async () => {
-        let queue = await api.getQueue(roomId);
-        store.dispatch(setQueue(queue.data));
-    };
-
-    let CurrentView = "";
+    let CurrentView = '';
     if (queueData.currentSong) {
         CurrentView = (
-            <div>
+            <div className="m-auto max-w-lg flex-col justify-center">
                 <div>
                     <div className="mt-4 mb-2 text-3xl">Current Song</div>
                     {<SongCard song={queueData.currentSong} />}
@@ -32,7 +19,12 @@ const SongView = () => {
                     <div className="mt-4 mb-2 text-3xl">Current Queue</div>
                     <ul>
                         {queueData.queue.map((song) => {
-                            return (<SongCard key={"queue-" + song.id} song={song} />);
+                            return (
+                                <SongCard
+                                    key={'queue-' + song.id + '-' + i++}
+                                    song={song}
+                                />
+                            );
                         })}
                     </ul>
                 </div>
@@ -42,15 +34,7 @@ const SongView = () => {
         CurrentView = <div>No song playing.</div>;
     }
 
-    return (
-        <div>
-            <div className="mt-16 mb-2 text-4xl">Song View</div>
-            <button className="mb-4" onClick={fetchQueue}>
-                Reload Songs
-            </button>
-            {CurrentView}
-        </div>
-    );
+    return <div>{CurrentView}</div>;
 };
 
 export default SongView;

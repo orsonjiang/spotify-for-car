@@ -2,11 +2,10 @@ const HomePage = () => {
     return (
         <div>
             <h1 className="m-16 text-5xl">Spotify for Car</h1>
-            <a
-                href={`${import.meta.env.VITE_SERVER_URL}/auth/login`}
-                className="rounded-lg border border-transparent bg-zinc-200 px-6 py-4 font-bold hover:border-green-500 dark:bg-stone-900 duration-75"
-            >
-                Login
+            <a href={`${import.meta.env.VITE_SERVER_URL}/auth/login`}>
+                <button className="rounded-full bg-green-600 px-6 py-3.5 text-white duration-150 hover:bg-green-500 active:bg-green-700">
+                    Login
+                </button>
             </a>
         </div>
     );
