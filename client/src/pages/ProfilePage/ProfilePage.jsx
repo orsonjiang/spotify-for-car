@@ -10,6 +10,7 @@ const ProfilePage = () => {
         setUser({
             displayName: null,
             url: null,
+            picture_url: null,
         });
     };
 
@@ -20,10 +21,10 @@ const ProfilePage = () => {
         };
 
         fetchUrl().catch(setNullUser);
-    }, [user.displayName, user.url]);
+    }, [user.displayName, user.url, user.picture_url]);
 
     let content;
-    const profile = user.profile || DEFAULT_PROFILE;
+    const profile = user.picture_url || DEFAULT_PROFILE;
 
     if (user.displayName === null) {
         content = (
