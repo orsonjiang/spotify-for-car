@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
     setSearchText,
@@ -17,10 +17,17 @@ const Navbar = () => {
     const { roomId } = useParams();
 
     const { text, results } = useSelector((state) => state.search);
+    const [ roomDetails, setRoomDetails ] = useState({});
 
     useEffect(() => {
+        fetchRoomDetails();
         fetchQueue();
     }, []);
+
+    const fetchRoomDetails = async () => {
+        let details = await api.getRoom(roomId);
+        setRoomDetails(details.data)
+    }
 
     const fetchQueue = async () => {
         let queue = await api.getQueue(roomId);
@@ -98,22 +105,24 @@ const Navbar = () => {
         </div>
     );
 
+
+
     return (
         <div className='my-12'>
             <div className="m-4 flex content-center justify-center gap-12 align-middle">
                 <div className="mx-2 flex items-center gap-x-3">
                     <img
-                        src={DEFAULT_PROFILE}
+                        src={roomDetails.picture_url || DEFAULT_PROFILE}
                         className="h-16 w-16 rounded-full"
                     />
                     <div>
-                        <span className="block text-xl">{}'s Room</span>
+                        <span className="block text-xl">{roomDetails.displayName || "Someone"}'s Room</span>
                     </div>
                 </div>
 
                 <div className="my-auto">
                     <button
-                        className="gap-2 rounded-lg bg-green-600 px-6 py-3.5 duration-150 hover:bg-green-500 active:bg-green-700"
+                        className="gap-2 rounded-lg bg-green-600 px-5 py-3 duration-150 hover:bg-green-500 active:bg-green-700"
                         onClick={fetchQueue}
                     >
                         Reload Songs

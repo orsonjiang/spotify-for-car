@@ -47,10 +47,13 @@ const loginCallback = async (req, res) => {
 
         let _id = '';
 
+
         const existingUser = await User.findOne({ spotifyId: profileReq.data.id });
         if (existingUser) {
             _id = existingUser._id;
         } else {
+            const picture_url = profileReq.data.images ? profileReq.data.images[0].url : "";
+
             const newUser = new User({
                 displayName: profileReq.data.display_name,
                 spotifyId: profileReq.data.id,
@@ -58,6 +61,7 @@ const loginCallback = async (req, res) => {
                 refreshToken: credReq.data.refresh_token,
                 expiresIn: date,
                 url: profileReq.data.id,
+                picture_url: picture_url,
             });
             const savedUser = await newUser.save();
             _id = savedUser._id;
@@ -110,6 +114,7 @@ const profile = async (req, res) => {
 			user: {
 				displayName: user.displayName,
 				url: user.url,
+                picture_url: user.picture_url
 			},
 		});
 

@@ -7,6 +7,7 @@ const api = axios.create({
 	baseURL: `${import.meta.env.VITE_SERVER_URL}/api`
 })
 
+const getRoom = (id) => api.get(`/${id}/details`);
 const getQueue = (id) => api.get(`/${id}/queue`);
 const search = (id, text) => api.get(`/${id}/search?` + qs.stringify({
 	q: text
@@ -16,6 +17,7 @@ const addToQueue = (id, trackId) => api.post(`/${id}/add?` + qs.stringify({
 }));
 
 const apis = {
+	getRoom,
 	getQueue,
 	search,
 	addToQueue,

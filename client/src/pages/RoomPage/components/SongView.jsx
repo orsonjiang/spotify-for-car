@@ -30,6 +30,8 @@ const SongView = () => {
                 </div>
             </div>
         );
+    } else if (queueData.currentSong === undefined) {
+        CurrentView = <div></div>;
     } else {
         CurrentView = <div>No song playing.</div>;
     }
