@@ -3,6 +3,20 @@ const api = require("../api/spotify");
 
 require('dotenv').config();
 
+const getRoom = async (req, res) => {
+	User.findOne({ url: req.params.url }, async (err, user) => {
+		if (err) {
+			return res.status(400);
+		}
+
+		res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
+		res.status(200).json({
+			displayName: user.displayName,
+			picture_url: user.picture_url
+		});
+	})
+}
+
 const getQueue = async (req, res) => {
 	User.findOne({ url: req.params.url }, async (err, user) => {
 		if (err) {
@@ -52,6 +66,7 @@ const addToQueue = async (req, res) => {
 }
 
 module.exports = {
+	getRoom,
 	getQueue,
 	search,
 	addToQueue,

@@ -6,12 +6,12 @@ const auth = require("../auth");
 require('dotenv').config();
 
 const login = (req, res) => {
-    const scope = ['user-read-playback-state', 'user-modify-playback-state', 'user-read-private', 'user-read-email'].join(" ");
+    const scope = ['user-read-playback-state', 'user-modify-playback-state', 'user-read-private'].join(" ");
     const query = qs.stringify({
         response_type: 'code',
         client_id: process.env.CLIENT_ID,
         scope: scope,
-        redirect_uri: process.env.CALLBACK_URI,
+        redirect_uri: process.env.SERVER_URL + "/auth/login/callback",
     });
 
     res.redirect('https://accounts.spotify.com/authorize?' + query);
@@ -31,7 +31,7 @@ const loginCallback = async (req, res) => {
             data: qs.stringify({
                 'grant_type': 'authorization_code',
                 'code': req.query.code,
-                'redirect_uri': process.env.CALLBACK_URI,
+                'redirect_uri': process.env.SERVER_URL + "/auth/login/callback",
             })
         });
 
@@ -47,18 +47,21 @@ const loginCallback = async (req, res) => {
 
         let _id = '';
 
+
         const existingUser = await User.findOne({ spotifyId: profileReq.data.id });
         if (existingUser) {
             _id = existingUser._id;
         } else {
+            const picture_url = profileReq.data.images ? profileReq.data.images[0].url : "";
+
             const newUser = new User({
                 displayName: profileReq.data.display_name,
-                email: profileReq.data.email,
                 spotifyId: profileReq.data.id,
                 accessToken: credReq.data.access_token,
                 refreshToken: credReq.data.refresh_token,
                 expiresIn: date,
                 url: profileReq.data.id,
+                picture_url: picture_url,
             });
             const savedUser = await newUser.save();
             _id = savedUser._id;
@@ -72,9 +75,11 @@ const loginCallback = async (req, res) => {
         res.redirect(`${process.env.CLIENT_URL}/profile`);
 
     } catch (err) {
-        return res.status(400).json({
-            errorMessage: "Unable to verify account with Spotify.",
-        });
+        res.redirect(`${process.env.CLIENT_URL}/profile`);
+        // return res.status(400).json({
+        //     errorMessage: "Unable to verify account with Spotify. Most likely you are not whitelisted.",
+        //     err: err
+        // });
     }
 }
 
@@ -109,6 +114,7 @@ const profile = async (req, res) => {
 			user: {
 				displayName: user.displayName,
 				url: user.url,
+                picture_url: user.picture_url
 			},
 		});
 

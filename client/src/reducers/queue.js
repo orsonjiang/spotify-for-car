@@ -1,7 +1,7 @@
 import { SET_QUEUE } from "../constants/action-types";
 
 const initialState = {
-	currentSong: null,
+	currentSong: undefined,
 	queue: []
 };
 

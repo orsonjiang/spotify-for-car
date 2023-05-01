@@ -4,12 +4,12 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema(
     {
         displayName: { type: String, required: true },
-        email: { type: String, required: true },
         spotifyId: { type: String, required: true },
         accessToken: { type: String, required: true },
         refreshToken: { type: String, required: true },
         expiresIn: { type: Date, required: true },
         url: { type: String, required: true },
+        picture_url: { type: String, required: false }
     },
     { timestamps: true }
 );
