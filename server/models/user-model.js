@@ -9,6 +9,7 @@ const UserSchema = new Schema(
         refreshToken: { type: String, required: true },
         expiresIn: { type: Date, required: true },
         url: { type: String, required: true },
+        picture_url: { type: String, required: false }
     },
     { timestamps: true }
 );
