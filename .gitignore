@@ -25,3 +25,6 @@ dist-ssr
 .prettierrc
 
 *.env
+
+server/.gcloudignore
+server/app.yaml
