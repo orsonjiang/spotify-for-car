@@ -3,6 +3,7 @@ import {
 	SET_ROOM,
 	SET_SEARCH_RESULTS,
 	SET_ADDED_SONG,
+	SET_USER,
 	SET_VIEW,
 } from "../constants/action-types";
 
@@ -24,6 +25,11 @@ export const setSearchResults = (results) => ({
 export const setAddedSong = (trackId) => ({
 	type: SET_ADDED_SONG,
 	payload: trackId
+})
+
+export const setUser = (user) => ({
+	type: SET_USER,
+	payload: user
 })
 
 export const setView = (view) => ({

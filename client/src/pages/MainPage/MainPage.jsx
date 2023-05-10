@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useSelector } from "react-redux";
 import { useParams } from 'react-router-dom';
 
@@ -15,11 +16,19 @@ import {
 	VIEW_LIBRARY,
 	VIEW_SETTINGS,
 } from "../../constants/view-types";
+
 import store from "../../store";
 import { setView } from "../../actions";
+import { fetchQueue, fetchRoomDetails, fetchUser } from '../../helpers';
 
 const RoomPage = () => {
     const roomId = useParams()['*'];
+
+    useEffect(() => {
+        fetchRoomDetails(roomId);
+        fetchQueue(roomId);
+        fetchUser();
+    }, []);
 
     const { globalView } = useSelector((state) => state.view);
     let view;
@@ -27,7 +36,6 @@ const RoomPage = () => {
     if (roomId && globalView == VIEW_HOME) {
         store.dispatch(setView(VIEW_QUEUE));
     }
-
 
     switch (globalView) {
         case VIEW_HOME:
@@ -46,7 +54,6 @@ const RoomPage = () => {
         default:
             break;
     }
-
 
     return (
         <div>

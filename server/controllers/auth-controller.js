@@ -53,7 +53,7 @@ const loginCallback = async (req, res) => {
             _id = existingUser._id;
             url = existingUser.url;
         } else {
-            const picture_url = profileReq.data.images ? profileReq.data.images[0].url : "";
+            const picture_url = profileReq.data.images.length ? profileReq.data.images[0].url : "";
 
             const newUser = new User({
                 displayName: profileReq.data.display_name,
@@ -77,11 +77,12 @@ const loginCallback = async (req, res) => {
         res.redirect(`${process.env.CLIENT_URL}/${url}`);
 
     } catch (err) {
-        res.redirect(`${process.env.CLIENT_URL}/error`);
+        // res.redirect(`${process.env.CLIENT_URL}/error`);
         // return res.status(400).json({
         //     errorMessage: "Unable to verify account with Spotify. Most likely you are not whitelisted.",
         //     err: err
         // });
+        console.log(err)
     }
 }
 
@@ -116,7 +117,8 @@ const profile = async (req, res) => {
 			user: {
 				displayName: user.displayName,
 				url: user.url,
-                picture_url: user.picture_url
+                picture_url: user.picture_url,
+                id: user.spotifyId
 			},
 		});
 
