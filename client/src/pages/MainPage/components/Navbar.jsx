@@ -15,7 +15,7 @@ const Navbar = () => {
                         className="h-16 w-16 rounded-full"
                     />
                     <div>
-                        <span className="block text-xl">{roomDetails.displayName || "Someone"}'s Room</span>
+                        <span className="block text-3xl">{roomDetails.displayName || "Someone"}'s Room</span>
                     </div>
                 </div>
             </div>
