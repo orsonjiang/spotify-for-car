@@ -8,7 +8,6 @@ const SongCard = (props) => {
 	if (song.id == addedSong) {
 		className += " border border-blue-600";
 	}
-	console.log(song.album.artists)
 
 	return (
 		<li key={song.id} className={className} onClick={onClick ? () => onClick(song.id) : undefined}>

@@ -1,34 +1,35 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { useState } from 'react';
+
 import {
-    setSearchText,
     setSearchResults,
     setAddedSong,
     setQueue,
 } from '../../../../actions';
-
-import DEFAULT_PROFILE from '../../../../assets/default_profile.jpeg';
 import store from '../../../../store';
 import api from '../../../../api/api';
+
+import Navbar from '../../components/Navbar';
 import SongCard from '../QueueView/components/SongCard';
-import { fetchQueue } from '../../../../helpers';
 
 const SearchView = () => {
     const roomId = useParams()['*'];
 
-    const roomDetails = useSelector((state) => state.room)
-    const { text, results } = useSelector((state) => state.search);
+    const { results } = useSelector((state) => state.search);
+
+    const [searchText, setSearchText] = useState({});
 
     const handleUpdateText = (event) => {
-        store.dispatch(setSearchText(event.target.value));
-    };
-
-    const handleOnSubmit = (event) => {
         event.preventDefault();
-        handleSearch();
+        const text = event.target.value;
+        if (text) {
+            handleSearch(text);
+        }
+        setSearchText(event.target.value);
     };
 
-    const handleSearch = async () => {
+    const handleSearch = async (text) => {
         let search = await api.search(roomId, text);
         store.dispatch(setSearchResults(search.data.tracks.items));
     };
@@ -42,26 +43,11 @@ const SearchView = () => {
         }
     };
 
-    let CurrentView = results.length ? (
-        <div className="m-auto max-w-lg flex-col justify-center">
-            <div className="mt-4 mb-2 text-3xl">Search Results</div>
-            {results.map((song) => {
-                return (
-                    <SongCard
-                        key={'search-' + song.id}
-                        song={song}
-                        onClick={handleAddSong}
-                    />
-                );
-            })}
-        </div>
-    ) : (
+    const SearchBar = (
         <div>
             <div className="flex justify-center">
                 <form
-                    onSubmit={handleOnSubmit}
                     onChange={handleUpdateText}
-                    value={text}
                     className="m-2 px-4"
                 >
                     <div className="relative">
@@ -90,28 +76,27 @@ const SearchView = () => {
         </div>
     );
 
-    return (
-        <div className='my-12'>
-            <div className="m-4 flex content-center justify-center gap-12 align-middle">
-                <div className="mx-2 flex items-center gap-x-3">
-                    <img
-                        src={roomDetails.picture_url || DEFAULT_PROFILE}
-                        className="h-16 w-16 rounded-full"
+    const CurrentView = searchText && results.length ? (
+        <div className="m-auto max-w-lg flex-col justify-center">
+            <div className="mt-4 mb-2 text-3xl">Search Results</div>
+            {results.map((song) => {
+                return (
+                    <SongCard
+                        key={'search-' + song.id}
+                        song={song}
+                        onClick={handleAddSong}
                     />
-                    <div>
-                        <span className="block text-xl">{roomDetails.displayName || "Someone"}'s Room</span>
-                    </div>
-                </div>
+                );
+            })}
+        </div>
+    ) : (
+        ''
+    );
 
-                <div className="my-auto">
-                    <button
-                        className="gap-2 rounded-lg bg-green-600 px-5 py-3 duration-150 hover:bg-green-500 active:bg-green-700"
-                        onClick={fetchQueue}
-                    >
-                        Reload Songs
-                    </button>
-                </div>
-            </div>
+    return (
+        <div className="my-12">
+            <Navbar />
+            {SearchBar}
             {CurrentView}
         </div>
     );
