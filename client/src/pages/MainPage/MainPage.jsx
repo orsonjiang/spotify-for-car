@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import HomeView from "./views/HomeView/HomeView";
 import QueueView from "./views/QueueView/QueueView";
 import SearchView from "./views/SearchView/SearchView";
+import LibraryView from './views/LibraryView/LibraryView';
 import SettingsView from "./views/SettingsView/SettingsView";
 
 import BottomNavbar from "./components/BottomNavbar";
@@ -21,7 +22,7 @@ import store from "../../store";
 import { setView } from "../../actions";
 import { fetchQueue, fetchRoomDetails, fetchUser } from '../../helpers';
 
-const RoomPage = () => {
+const MainPage = () => {
     const roomId = useParams()['*'];
 
     useEffect(() => {
@@ -47,6 +48,7 @@ const RoomPage = () => {
             view = <SearchView />
             break;
         case VIEW_LIBRARY:
+            view = <LibraryView />
             break;
         case VIEW_SETTINGS:
             view = <SettingsView />
@@ -63,4 +65,4 @@ const RoomPage = () => {
     );
 };
 
-export default RoomPage;
+export default MainPage;
