@@ -18,7 +18,7 @@ const SearchView = () => {
 
     const { results } = useSelector((state) => state.search);
 
-    const [searchText, setSearchText] = useState({});
+    const [searchText, setSearchText] = useState("");
 
     const handleUpdateText = (event) => {
         event.preventDefault();
@@ -35,6 +35,7 @@ const SearchView = () => {
     };
 
     const handleAddSong = async (trackId) => {
+        setSearchText("");
         let addSong = await api.addToQueue(roomId, trackId);
         if (addSong.status == 200) {
             store.dispatch(setAddedSong(trackId));
@@ -46,8 +47,7 @@ const SearchView = () => {
     const SearchBar = (
         <div>
             <div className="flex justify-center">
-                <form
-                    onChange={handleUpdateText}
+                <div
                     className="m-2 px-4"
                 >
                     <div className="relative">
@@ -69,9 +69,11 @@ const SearchView = () => {
                             type="text"
                             placeholder="Search"
                             className="w-full rounded-md border bg-gray-50 py-3 pl-12 pr-4 text-gray-500 outline-none focus:border-indigo-600 focus:bg-white"
+                            onChange={handleUpdateText}
+                            value={searchText}
                         />
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     );
