@@ -3,6 +3,7 @@ import { SET_ROOM } from "../constants/action-types";
 const initialState = {
 	picture_url: "",
 	displayName: "",
+	owner_id: "",
 }
 
 const room = (state = initialState, action) => {
@@ -10,8 +11,7 @@ const room = (state = initialState, action) => {
 		case SET_ROOM:
 			return {
 				...state,
-				picture_url: action.payload.picture_url,
-				displayName: action.payload.displayName
+				...action.payload,
 			}
 
 		default:

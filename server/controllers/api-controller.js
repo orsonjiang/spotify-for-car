@@ -12,7 +12,8 @@ const getRoom = async (req, res) => {
 		res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
 		res.status(200).json({
 			displayName: user.displayName,
-			picture_url: user.picture_url
+			picture_url: user.picture_url,
+			owner_id: user.spotifyId
 		});
 	})
 }
