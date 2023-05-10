@@ -1,9 +1,15 @@
 import {
+	SET_VIEW,
 	SET_QUEUE,
 	SET_SEARCH_TEXT,
 	SET_SEARCH_RESULTS,
 	SET_ADDED_SONG
 } from "../constants/action-types";
+
+export const setView = (view) => ({
+	type: SET_VIEW,
+	payload: view
+})
 
 export const setQueue = (queue) => ({
 	type: SET_QUEUE,
