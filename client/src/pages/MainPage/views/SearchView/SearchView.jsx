@@ -1,5 +1,4 @@
 import { useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
     setSearchText,
@@ -12,27 +11,13 @@ import DEFAULT_PROFILE from '../../../../assets/default_profile.jpeg';
 import store from '../../../../store';
 import api from '../../../../api/api';
 import SongCard from '../QueueView/components/SongCard';
+import { fetchQueue } from '../../../../helpers';
 
 const SearchView = () => {
     const roomId = useParams()['*'];
 
+    const roomDetails = useSelector((state) => state.room)
     const { text, results } = useSelector((state) => state.search);
-    const [ roomDetails, setRoomDetails ] = useState({});
-
-    useEffect(() => {
-        fetchRoomDetails();
-        fetchQueue();
-    }, []);
-
-    const fetchRoomDetails = async () => {
-        let details = await api.getRoom(roomId);
-        setRoomDetails(details.data)
-    }
-
-    const fetchQueue = async () => {
-        let queue = await api.getQueue(roomId);
-        store.dispatch(setQueue(queue.data));
-    };
 
     const handleUpdateText = (event) => {
         store.dispatch(setSearchText(event.target.value));
@@ -104,8 +89,6 @@ const SearchView = () => {
             </div>
         </div>
     );
-
-
 
     return (
         <div className='my-12'>
