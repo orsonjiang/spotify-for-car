@@ -46,11 +46,12 @@ const loginCallback = async (req, res) => {
         });
 
         let _id = '';
-
+        let url = '';
 
         const existingUser = await User.findOne({ spotifyId: profileReq.data.id });
         if (existingUser) {
             _id = existingUser._id;
+            url = existingUser.url;
         } else {
             const picture_url = profileReq.data.images ? profileReq.data.images[0].url : "";
 
@@ -65,6 +66,7 @@ const loginCallback = async (req, res) => {
             });
             const savedUser = await newUser.save();
             _id = savedUser._id;
+            url = profileReq.data.id;
         }
 
         res.cookie("token", auth.signToken(_id), {
@@ -72,10 +74,10 @@ const loginCallback = async (req, res) => {
             secure: true,
             sameSite: true,
         })
-        res.redirect(`${process.env.CLIENT_URL}/profile`);
+        res.redirect(`${process.env.CLIENT_URL}/${url}`);
 
     } catch (err) {
-        res.redirect(`${process.env.CLIENT_URL}/profile`);
+        res.redirect(`${process.env.CLIENT_URL}/error`);
         // return res.status(400).json({
         //     errorMessage: "Unable to verify account with Spotify. Most likely you are not whitelisted.",
         //     err: err

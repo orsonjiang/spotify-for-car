@@ -1,8 +1,9 @@
 import {
 	SET_QUEUE,
-	SET_SEARCH_TEXT,
+	SET_ROOM,
 	SET_SEARCH_RESULTS,
-	SET_ADDED_SONG
+	SET_ADDED_SONG,
+	SET_VIEW,
 } from "../constants/action-types";
 
 export const setQueue = (queue) => ({
@@ -10,9 +11,9 @@ export const setQueue = (queue) => ({
 	payload: queue
 })
 
-export const setSearchText = (text) => ({
-	type: SET_SEARCH_TEXT,
-	payload: text
+export const setRoom = (room) => ({
+	type: SET_ROOM,
+	payload: room
 })
 
 export const setSearchResults = (results) => ({
@@ -23,4 +24,9 @@ export const setSearchResults = (results) => ({
 export const setAddedSong = (trackId) => ({
 	type: SET_ADDED_SONG,
 	payload: trackId
+})
+
+export const setView = (view) => ({
+	type: SET_VIEW,
+	payload: view
 })

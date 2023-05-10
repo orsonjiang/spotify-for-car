@@ -23,7 +23,7 @@ const refreshAccessToken = async (user) => {
 		user.expiresIn = date;
 		await user.save();
     } catch (err) {
-        // console.log(err)
+        console.log(err)
     }
 }
 

@@ -18,7 +18,7 @@ const SongCard = (props) => {
 			<div className="mt-2 flex flex-col text-left">
 				<p className="text-base font-normal">{song.name}</p>
 				<p className="text-sm font-light">
-					{song.album.artists[0].name}
+					{song.album.artists.map(artist => artist.name).join(", ")}
 				</p>
 			</div>
 		</li>

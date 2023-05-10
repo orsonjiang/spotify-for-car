@@ -1,12 +1,23 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
-import SongCard from './SongCard';
+import Navbar from '../../components/Navbar';
+import SongCard from './components/SongCard';
+
+import { fetchQueue, fetchRoomDetails } from '../../../../helpers';
 
 const SongView = () => {
+    const roomId = useParams()['*'];
+
     const queueData = useSelector((state) => state.queue);
 
-    let i = 0;
+    useEffect(() => {
+        fetchRoomDetails(roomId);
+        fetchQueue(roomId);
+    }, []);
 
+    let i = 0;
     let CurrentView = '';
     if (queueData.currentSong) {
         CurrentView = (
@@ -36,7 +47,12 @@ const SongView = () => {
         CurrentView = <div>No song playing.</div>;
     }
 
-    return <div>{CurrentView}</div>;
+    return (
+        <div>
+            <Navbar />
+            {CurrentView}
+        </div>
+    );
 };
 
 export default SongView;

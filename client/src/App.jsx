@@ -1,18 +1,16 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SiteWrapper from "./pages/components/SiteWrapper";
 
-import HomePage from "./pages/HomePage/HomePage";
-import ProfilePage from "./pages/ProfilePage/ProfilePage";
-import RoomPage from "./pages/RoomPage/RoomPage";
+import MainPage from "./pages/MainPage/MainPage";
+import ErrorPage from "./pages/ErrorPage/ErrorPage";
 
 function App() {
     return (
         <BrowserRouter>
             <SiteWrapper content={
                 <Routes>
-                    <Route exact path="/" element={<HomePage/>} />
-                    <Route exact path="/profile" element={<ProfilePage/>} />
-                    <Route exact path="/:roomId" element={<RoomPage/>} />
+                    <Route path="/error" element={<ErrorPage/>} />
+                    <Route path="/*" element={<MainPage/>} />
                 </Routes>
             } />
         </BrowserRouter>
