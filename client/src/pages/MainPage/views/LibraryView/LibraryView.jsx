@@ -3,8 +3,7 @@ import { useSelector } from 'react-redux';
 import Navbar from '../../components/Navbar';
 import SongCard from './components/SongCard';
 
-
-const QueueView = () => {
+const LibraryView = () => {
     const queueData = useSelector((state) => state.queue);
 
     let i = 0;
@@ -45,4 +44,4 @@ const QueueView = () => {
     );
 };
 
-export default QueueView;
+export default LibraryView;
