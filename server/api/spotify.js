@@ -86,8 +86,38 @@ const addToQueue = async (user, id) => {
     }
 }
 
+const getLibrary = async (user) => {
+	await updateAccessToken(user);
+    try {
+		const api = buildRequest(user);
+		const res = await api.get(`/users/${user.spotifyId}/playlists?` + qs.stringify({
+			limit: 50
+		}));
+		return res.data;
+    } catch (err) {
+		// console.log(err)
+		return null;
+    }
+}
+
+const getPlaylist = async (user, playlistId) => {
+	await updateAccessToken(user);
+    try {
+		const api = buildRequest(user);
+		const res = await api.get(`/playlists/${playlistId}/tracks?` + qs.stringify({
+			limit: 50
+		}));
+		return res.data;
+    } catch (err) {
+		// console.log(err)
+		return null;
+    }
+}
+
 module.exports = {
     getQueue,
     search,
     addToQueue,
+	getLibrary,
+	getPlaylist,
 }
