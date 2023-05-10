@@ -11,7 +11,7 @@ import store from '../../../../store';
 import api from '../../../../api/api';
 
 import Navbar from '../../components/Navbar';
-import SongCard from '../QueueView/components/SongCard';
+import SongCard from '../../components/SongCard';
 
 const SearchView = () => {
     const roomId = useParams()['*'];
