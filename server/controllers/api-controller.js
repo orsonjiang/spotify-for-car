@@ -5,7 +5,7 @@ require('dotenv').config();
 
 const getRoom = async (req, res) => {
 	User.findOne({ url: req.params.url }, async (err, user) => {
-		if (err) {
+		if (err || !user) {
 			return res.status(400);
 		}
 
@@ -20,7 +20,7 @@ const getRoom = async (req, res) => {
 
 const getQueue = async (req, res) => {
 	User.findOne({ url: req.params.url }, async (err, user) => {
-		if (err) {
+		if (err || !user) {
 			return res.status(400);
 		}
 
@@ -66,9 +66,63 @@ const addToQueue = async (req, res) => {
 	})
 }
 
+const getLibrary = async (req, res) => {
+	if (!req.userId) {
+		return res.status(400).json({
+			user: null,
+			errorMessage: "Unauthorized",
+		});
+	}
+
+	User.findOne({ _id: req.userId }, async (err, user) => {
+		if (err || !user) {
+			return res.status(400).json({
+				user: null,
+				errorMessage: "Unauthorized",
+			});
+		}
+
+		res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
+
+		const response = await api.getLibrary(user);
+
+		res.status(200).json(response);
+
+		res.end();
+	})
+}
+
+const getPlaylist = async (req, res) => {
+	if (!req.userId) {
+		return res.status(400).json({
+			user: null,
+			errorMessage: "Unauthorized",
+		});
+	}
+
+	User.findOne({ _id: req.userId }, async (err, user) => {
+		if (err || !user) {
+			return res.status(400).json({
+				user: null,
+				errorMessage: "Unauthorized",
+			});
+		}
+
+		res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
+
+		const response = await api.getPlaylist(user, req.params.id);
+
+		res.status(200).json(response);
+
+		res.end();
+	})
+}
+
 module.exports = {
 	getRoom,
 	getQueue,
 	search,
 	addToQueue,
+	getLibrary,
+	getPlaylist,
 }
