@@ -7,6 +7,7 @@ import store from '../../../../store';
 import api from '../../../../api/api';
 import PlaylistCard from './components/PlaylistCard';
 import SongCard from '../../components/SongCard';
+import LoginButton from '../../components/LoginButton';
 
 const LibraryView = () => {
     const roomId = useParams()['*'];
@@ -41,9 +42,12 @@ const LibraryView = () => {
     let content = '';
     if (user.displayName === '') {
         content = (
-            <div>
-                <Navbar />
-                <div className="text-lg">Login to manage this room.</div>
+            <div className='mx-16'>
+                <div className="m-8 text-3xl">My Library</div>
+                <div className="text-lg">Login to access your playlists.
+                <br />
+                <br />
+                You will have to rejoin this room after you login.</div>
                 <div className="my-8">
                     <LoginButton />
                 </div>
@@ -55,9 +59,8 @@ const LibraryView = () => {
             setPlaylists(res.data.items);
         }
         getLibrary();
-    }
-
-    if (playlist) {
+        content = (<div className="m-8 text-3xl">My Library</div>);
+    } else if (playlist) {
         content = (
             <div className="m-auto flex-col">
                 <div>
@@ -130,7 +133,7 @@ const LibraryView = () => {
             </div>
         );
     } else {
-        content = <div></div>;
+        content = (<div className="m-8 text-3xl">My Library</div>);
     }
 
     return <div>{content}</div>;
