@@ -1,7 +1,6 @@
 import {
 	SET_QUEUE,
 	SET_ROOM,
-	SET_SEARCH_TEXT,
 	SET_SEARCH_RESULTS,
 	SET_ADDED_SONG,
 	SET_VIEW,
@@ -15,11 +14,6 @@ export const setQueue = (queue) => ({
 export const setRoom = (room) => ({
 	type: SET_ROOM,
 	payload: room
-})
-
-export const setSearchText = (text) => ({
-	type: SET_SEARCH_TEXT,
-	payload: text
 })
 
 export const setSearchResults = (results) => ({
