@@ -1,22 +1,10 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+
+import { useSelector } from 'react-redux';
 
 import DEFAULT_PROFILE from '../../../assets/default_profile.jpeg';
-import api from '../../../api/api';
 
 const Navbar = () => {
-    const roomId = useParams()['*'];
-
-    const [ roomDetails, setRoomDetails ] = useState({});
-
-    useEffect(() => {
-        fetchRoomDetails();
-    }, []);
-
-    const fetchRoomDetails = async () => {
-        let details = await api.getRoom(roomId);
-        setRoomDetails(details.data)
-    }
+    const roomDetails = useSelector((state) => state.room)
 
     return (
         <div className='my-12'>
