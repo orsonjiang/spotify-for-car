@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 
 import Navbar from '../../components/Navbar';
-import SongCard from './components/SongCard';
+import SongCard from '../../components/SongCard';
 
 
 const QueueView = () => {
