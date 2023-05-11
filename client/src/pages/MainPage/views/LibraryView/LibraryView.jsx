@@ -62,7 +62,7 @@ const LibraryView = () => {
         content = (<div className="m-8 text-3xl">My Library</div>);
     } else if (playlist) {
         content = (
-            <div className="m-auto flex-col">
+            <div className="flex-col">
                 <div>
                     <div className="flex align-middle">
                         <div className="absolute top-7 bottom-0 left-4">
@@ -95,7 +95,7 @@ const LibraryView = () => {
                             {playlistName}
                         </div>
                     </div>
-                    <div className="max-w-lg">
+                    <div className="max-w-lg m-auto">
                         <ul>
                             {playlist.map((song) => {
                                 return (
