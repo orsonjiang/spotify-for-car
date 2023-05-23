@@ -1,7 +1,8 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { setAddedSong, setQueue, setPlaylist } from '../../../../actions';
+import LIKED_SONGS from "../../../../assets/liked-songs.png"
+import { setAddedSong, setQueue, setPlaylist, addPlaylistCache } from '../../../../actions';
 import store from '../../../../store';
 import api from '../../../../api/api';
 import PlaylistCard from './components/PlaylistCard';
@@ -11,16 +12,39 @@ import LoginButton from '../../components/LoginButton';
 const LibraryView = () => {
     const roomId = useParams()['*'];
     const { user } = useSelector((state) => state.user);
-    const { library, playlist } = useSelector((state) => state.library);
+    const { library, playlist, playlistCache } = useSelector((state) => state.library);
+
+    const fullLibrary = [{
+        id: "liked",
+        images: [
+            {
+                url: LIKED_SONGS
+            }
+        ],
+        name: "Liked Songs",
+        owner: {
+            display_name: "You"
+        }
+    }].concat(library);
+
 
     const handleSetPlaylist = async (id) => {
-        const res = await api.getPlaylist(id);
+        let data;
+
+        if (playlistCache[id] != null) {
+            data = playlistCache[id];
+        } else {
+            const res = await api.getPlaylist(id);
+            data = res.data;
+            store.dispatch(addPlaylistCache(id, res.data))
+        }
         store.dispatch(
             setPlaylist({
-                name: library.filter((playlist) => playlist.id == id)[0].name,
-                songs: res.data,
+                name: id === "liked" ? "Liked Songs" : fullLibrary.filter((playlist) => playlist.id == id)[0].name,
+                songs: data,
             })
         );
+        
     };
 
     const handleAddSong = async (trackId) => {
@@ -74,13 +98,13 @@ const LibraryView = () => {
                 </div>
             </div>
         );
-    } else if (library.length) {
+    } else if (fullLibrary.length) {
         content = (
             <div className="m-auto max-w-lg flex-col justify-center">
                 <div>
                     <div className="m-8 text-3xl">My Library</div>
                     <ul>
-                        {library.map((playlist) => {
+                        {fullLibrary.map((playlist) => {
                             return (
                                 <PlaylistCard
                                     id={playlist.id}
