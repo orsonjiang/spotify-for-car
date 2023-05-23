@@ -1,4 +1,6 @@
 import {
+	SET_PLAYLIST,
+	SET_LIBRARY,
 	SET_QUEUE,
 	SET_ROOM,
 	SET_SEARCH_RESULTS,
@@ -6,6 +8,16 @@ import {
 	SET_USER,
 	SET_VIEW,
 } from "../constants/action-types";
+
+export const setPlaylist = (playlist) => ({
+	type: SET_PLAYLIST,
+	payload: playlist
+})
+
+export const setLibrary = (library) => ({
+	type: SET_LIBRARY,
+	payload: library
+})
 
 export const setQueue = (queue) => ({
 	type: SET_QUEUE,

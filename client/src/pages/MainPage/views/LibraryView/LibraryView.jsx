@@ -1,8 +1,12 @@
-import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import { setAddedSong, setQueue } from '../../../../actions';
+import {
+    setAddedSong,
+    setQueue,
+    setLibrary,
+    setPlaylist,
+} from '../../../../actions';
 import store from '../../../../store';
 import api from '../../../../api/api';
 import PlaylistCard from './components/PlaylistCard';
@@ -12,22 +16,19 @@ import LoginButton from '../../components/LoginButton';
 const LibraryView = () => {
     const roomId = useParams()['*'];
     const { user } = useSelector((state) => state.user);
-
-    const [playlists, setPlaylists] = useState([]);
-    const [playlist, setPlaylist] = useState(null);
-    const [playlistName, setPlaylistName] = useState('');
+    const { library, playlist } = useSelector((state) => state.library);
 
     const handleSetPlaylist = async (id) => {
         const res = await api.getPlaylist(id);
-        setPlaylistName(
-            playlists.filter((playlist) => playlist.id == id)[0].name
-        );
-        setPlaylist(res.data.items);
+        store.dispatch(setPlaylist({
+            name: library.filter((playlist) => playlist.id == id)[0].name,
+            songs: res.data.items,
+        }));
     };
 
     const handleClearPlaylist = () => {
-        setPlaylist(null);
-    }
+        store.dispatch(setPlaylist([]));
+    };
 
     const handleAddSong = async (trackId) => {
         let addSong = await api.addToQueue(roomId, trackId);
@@ -42,25 +43,20 @@ const LibraryView = () => {
     let content = '';
     if (user.displayName === '') {
         content = (
-            <div className='mx-16'>
+            <div className="mx-16">
                 <div className="m-8 text-3xl">My Library</div>
-                <div className="text-lg">Login to access your playlists.
-                <br />
-                <br />
-                You will have to rejoin this room after you login.</div>
+                <div className="text-lg">
+                    Login to access your playlists.
+                    <br />
+                    <br />
+                    You will have to rejoin this room after you login.
+                </div>
                 <div className="my-8">
                     <LoginButton />
                 </div>
             </div>
         );
-    } else if (!playlists.length) {
-        async function getLibrary() {
-            const res = await api.getLibrary();
-            setPlaylists(res.data.items);
-        }
-        getLibrary();
-        content = (<div className="m-8 text-3xl">My Library</div>);
-    } else if (playlist) {
+    } else if (playlist.name) {
         content = (
             <div className="flex-col">
                 <div>
@@ -92,17 +88,15 @@ const LibraryView = () => {
                             </button>
                         </div>
                         <div className="my-8 mx-auto self-center text-3xl">
-                            {playlistName}
+                            {playlist.name}
                         </div>
                     </div>
-                    <div className="max-w-lg m-auto">
+                    <div className="m-auto max-w-lg">
                         <ul>
-                            {playlist.map((song) => {
+                            {playlist.songs.map((song) => {
                                 return (
                                     <SongCard
-                                        key={
-                                            'queue-' + song.track.id + '-' + i++
-                                        }
+                                        key={'queue-' + song.track.id + '-' + i++}
                                         song={song.track}
                                         onClick={handleAddSong}
                                     />
@@ -113,15 +107,16 @@ const LibraryView = () => {
                 </div>
             </div>
         );
-    } else if (playlists.length) {
+    } else if (library.length) {
         content = (
             <div className="m-auto max-w-lg flex-col justify-center">
                 <div>
                     <div className="m-8 text-3xl">My Library</div>
                     <ul>
-                        {playlists.map((playlist) => {
+                        {library.map((playlist) => {
                             return (
                                 <PlaylistCard
+                                    id={playlist.id}
                                     key={'playlist-' + playlist.id + '-' + i++}
                                     playlist={playlist}
                                     onClick={handleSetPlaylist}
@@ -133,7 +128,7 @@ const LibraryView = () => {
             </div>
         );
     } else {
-        content = (<div className="m-8 text-3xl">My Library</div>);
+        content = <div className="m-8 text-3xl">My Library</div>;
     }
 
     return <div>{content}</div>;
