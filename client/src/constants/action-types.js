@@ -1,3 +1,6 @@
+export const SET_PLAYLIST = "SET_PLAYLIST";
+export const SET_LIBRARY = "SET_LIBRARY";
+
 export const SET_QUEUE = "SET_QUEUE";
 
 export const SET_ROOM = "SET_ROOM";

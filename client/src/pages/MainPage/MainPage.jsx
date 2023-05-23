@@ -20,18 +20,18 @@ import {
 
 import store from "../../store";
 import { setView } from "../../actions";
-import { fetchQueue, fetchRoomDetails, fetchUser } from '../../helpers';
+import { fetchQueue, fetchRoomDetails, fetchUser, fetchLibrary } from '../../helpers';
 
 const MainPage = () => {
     const roomId = useParams()['*'];
+    const { globalView } = useSelector((state) => state.view);
 
     useEffect(() => {
         fetchRoomDetails(roomId);
         fetchQueue(roomId);
-        fetchUser();
+        fetchUser().then(fetchLibrary());
     }, []);
 
-    const { globalView } = useSelector((state) => state.view);
     let view;
 
     if (roomId && globalView == VIEW_HOME) {
@@ -59,7 +59,9 @@ const MainPage = () => {
 
     return (
         <div>
-            {view}
+            <div className='mb-20'>
+                {view}
+            </div>
             <BottomNavbar />
         </div>
     );

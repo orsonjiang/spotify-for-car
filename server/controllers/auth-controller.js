@@ -77,12 +77,12 @@ const loginCallback = async (req, res) => {
         res.redirect(`${process.env.CLIENT_URL}/${url}`);
 
     } catch (err) {
-        // res.redirect(`${process.env.CLIENT_URL}/error`);
+        res.redirect(`${process.env.CLIENT_URL}/error`);
         // return res.status(400).json({
         //     errorMessage: "Unable to verify account with Spotify. Most likely you are not whitelisted.",
         //     err: err
         // });
-        console.log(err)
+        // console.log(err)
     }
 }
 
