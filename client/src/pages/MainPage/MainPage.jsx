@@ -59,7 +59,9 @@ const MainPage = () => {
 
     return (
         <div>
-            {view}
+            <div className='mb-20'>
+                {view}
+            </div>
             <BottomNavbar />
         </div>
     );
