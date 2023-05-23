@@ -104,10 +104,18 @@ const getPlaylist = async (user, playlistId) => {
 	await updateAccessToken(user);
     try {
 		const api = buildRequest(user);
-		const res = await api.get(`/playlists/${playlistId}/tracks?` + qs.stringify({
+		let res = await api.get(`/playlists/${playlistId}/tracks?` + qs.stringify({
 			limit: 50
 		}));
-		return res.data;
+
+		let songs = res.data.items;
+
+		while (res.data.next !== null) {
+			res = await api.get(res.data.next);
+			songs = songs.concat(res.data.items);
+		}
+
+		return songs;
     } catch (err) {
 		// console.log(err)
 		return null;
