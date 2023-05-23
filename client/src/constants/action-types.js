@@ -1,5 +1,6 @@
 export const SET_PLAYLIST = "SET_PLAYLIST";
 export const SET_LIBRARY = "SET_LIBRARY";
+export const ADD_PLAYLIST_CACHE = "ADD_PLAYLIST_CACHE";
 
 export const SET_QUEUE = "SET_QUEUE";
 

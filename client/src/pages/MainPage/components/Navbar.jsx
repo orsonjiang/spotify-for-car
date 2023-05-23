@@ -1,7 +1,7 @@
 
 import { useSelector } from 'react-redux';
 
-import DEFAULT_PROFILE from '../../../assets/default_profile.jpeg';
+import DEFAULT_PROFILE from '../../../assets/default-profile.jpeg';
 
 const Navbar = () => {
     const roomDetails = useSelector((state) => state.room)

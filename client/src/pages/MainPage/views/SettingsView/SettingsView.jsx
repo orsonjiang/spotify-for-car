@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import Navbar from "../../components/Navbar";
 import LoginButton from '../../components/LoginButton';
 
-import DEFAULT_PROFILE from '../../../../assets/default_profile.jpeg';
+import DEFAULT_PROFILE from '../../../../assets/default-profile.jpeg';
 
 const SettingsView = () => {
     const { user } = useSelector((state) => state.user);

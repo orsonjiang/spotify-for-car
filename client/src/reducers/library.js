@@ -1,10 +1,13 @@
-import { SET_PLAYLIST, SET_LIBRARY } from "../constants/action-types";
+import { SET_PLAYLIST, SET_LIBRARY, ADD_PLAYLIST_CACHE } from "../constants/action-types";
 
 const initialState = {
 	library: [],
 	playlist: {
 		name: "",
 		songs: []
+	},
+	playlistCache: {
+
 	}
 }
 
@@ -19,6 +22,14 @@ const room = (state = initialState, action) => {
 			return {
 				...state,
 				library: action.payload
+			}
+		case ADD_PLAYLIST_CACHE:
+			return {
+				...state,
+				playlistCache: {
+					...state.playlistCache,
+					[action.payload.id]: action.payload.songs
+				}
 			}
 
 		default:

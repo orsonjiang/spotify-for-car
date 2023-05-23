@@ -6,7 +6,7 @@ const auth = require("../auth");
 require('dotenv').config();
 
 const login = (req, res) => {
-    const scope = ['user-read-playback-state', 'user-modify-playback-state', 'user-read-private', 'playlist-read-private', 'playlist-read-collaborative'].join(" ");
+    const scope = ['user-read-playback-state', 'user-modify-playback-state', 'user-read-private', 'playlist-read-private', 'playlist-read-collaborative', 'user-library-read'].join(" ");
     const query = qs.stringify({
         response_type: 'code',
         client_id: process.env.CLIENT_ID,
@@ -104,7 +104,7 @@ const profile = async (req, res) => {
 	}
 
 	User.findOne({ _id: req.userId }, async (err, user) => {
-		if (err) {
+		if (err || !user) {
 			res.status(400).json({
 				user: null,
 				errorMessage: "Unauthorized",

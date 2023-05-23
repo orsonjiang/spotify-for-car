@@ -122,10 +122,33 @@ const getPlaylist = async (user, playlistId) => {
     }
 }
 
+const getLikedSongs = async (user) => {
+	await updateAccessToken(user);
+    try {
+		const api = buildRequest(user);
+		let res = await api.get(`/me/tracks?` + qs.stringify({
+			limit: 50
+		}));
+
+		let songs = res.data.items;
+
+		while (res.data.next !== null) {
+			res = await api.get(res.data.next);
+			songs = songs.concat(res.data.items);
+		}
+
+		return songs;
+    } catch (err) {
+		// console.log(err)
+		return null;
+    }
+}
+
 module.exports = {
     getQueue,
     search,
     addToQueue,
 	getLibrary,
 	getPlaylist,
+	getLikedSongs,
 }
