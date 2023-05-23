@@ -1,6 +1,7 @@
 import {
 	SET_PLAYLIST,
 	SET_LIBRARY,
+	ADD_PLAYLIST_CACHE,
 	SET_QUEUE,
 	SET_ROOM,
 	SET_SEARCH_RESULTS,
@@ -17,6 +18,14 @@ export const setPlaylist = (playlist) => ({
 export const setLibrary = (library) => ({
 	type: SET_LIBRARY,
 	payload: library
+})
+
+export const addPlaylistCache = (id, songs) => ({
+	type: ADD_PLAYLIST_CACHE,
+	payload: {
+		id: id,
+		songs: songs
+	}
 })
 
 export const setQueue = (queue) => ({

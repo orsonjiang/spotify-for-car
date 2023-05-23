@@ -110,7 +110,7 @@ const getPlaylist = async (req, res) => {
 
 		res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
 
-		const response = await api.getPlaylist(user, req.params.id);
+		const response = req.params.id === "liked" ? await api.getLikedSongs(user) : await api.getPlaylist(user, req.params.id);
 
 		res.status(200).json(response);
 
