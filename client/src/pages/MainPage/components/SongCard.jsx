@@ -1,5 +1,7 @@
 import { useSelector } from 'react-redux';
 
+import AlbumCover from '../../components/AlbumCover';
+
 const SongCard = (props) => {
     const { song, onClick } = props;
     const addedSong = useSelector((state) => state.search.addedSong);
@@ -15,14 +17,7 @@ const SongCard = (props) => {
             className={className}
             onClick={onClick ? () => onClick(song.id) : undefined}
         >
-            {song.album.images.length ? (
-                <img
-                    className={'m-2 h-12 w-12'}
-                    src={song.album.images[0].url}
-                />
-            ) : (
-                ''
-            )}
+			<AlbumCover album={song.album}/>
             <div className="mt-2 flex flex-col text-left">
                 <p className="text-base font-normal">{song.name}</p>
                 <p className="text-sm font-light">

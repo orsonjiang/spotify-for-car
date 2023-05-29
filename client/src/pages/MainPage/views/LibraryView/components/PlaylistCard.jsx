@@ -1,3 +1,5 @@
+import AlbumCover from "../../../../components/AlbumCover";
+
 const PlaylistCard = (props) => {
 	const { playlist, onClick } = props; 
 
@@ -5,10 +7,7 @@ const PlaylistCard = (props) => {
 
 	return (
 		<li key={playlist.id} className={className} onClick={onClick ? () => onClick(playlist.id) : undefined}>
-			<img
-				className={"m-2 h-12 w-12"}
-				src={playlist.images[0].url}
-			/>
+			<AlbumCover album={playlist}/>
 			<div className="mt-2 flex flex-col text-left">
 				<p className="text-base font-normal">{playlist.name}</p>
 				<p className="text-sm font-light">
