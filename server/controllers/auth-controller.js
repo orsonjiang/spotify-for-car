@@ -96,6 +96,8 @@ const logout = async (req, res) => {
 };
 
 const profile = async (req, res) => {
+    res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
+
 	if (!req.userId) {
 		res.status(400).json({
 			user: null,
@@ -110,8 +112,6 @@ const profile = async (req, res) => {
 				errorMessage: "Unauthorized",
 			});
 		}
-
-		res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
 
 		res.status(200).json({
 			user: {

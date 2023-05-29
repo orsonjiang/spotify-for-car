@@ -4,12 +4,12 @@ const api = require("../api/spotify");
 require('dotenv').config();
 
 const getRoom = async (req, res) => {
+	res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
 	User.findOne({ url: req.params.url }, async (err, user) => {
 		if (err || !user) {
 			return res.status(400);
 		}
 
-		res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
 		res.status(200).json({
 			displayName: user.displayName,
 			picture_url: user.picture_url,
@@ -19,6 +19,7 @@ const getRoom = async (req, res) => {
 }
 
 const getQueue = async (req, res) => {
+	res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
 	User.findOne({ url: req.params.url }, async (err, user) => {
 		if (err || !user) {
 			return res.status(400);
@@ -26,7 +27,6 @@ const getQueue = async (req, res) => {
 
 		const queue = await api.getQueue(user);
 
-		res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
 		res.status(200).json({
 			currentSong: queue.currently_playing,
 			queue: queue.queue
@@ -35,6 +35,7 @@ const getQueue = async (req, res) => {
 }
 
 const search = async (req, res) => {
+	res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
 	User.findOne({ url: req.params.url }, async (err, user) => {
 		if (err || !req.query || !req.query.q) {
 			return res.status(400);
@@ -42,12 +43,12 @@ const search = async (req, res) => {
 
 		const results = await api.search(user, req.query.q);
 
-		res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
 		res.status(200).json(results);
 	})
 }
 
 const addToQueue = async (req, res) => {
+	res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
 	User.findOne({ url: req.params.url }, async (err, user) => {
 		if (err || !req.query || !req.query.id) {
 			return res.status(400);
@@ -55,7 +56,6 @@ const addToQueue = async (req, res) => {
 
 		const response = await api.addToQueue(user, req.query.id);
 
-		res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
 		if (response) {
 			res.status(200);
 		} else {
@@ -67,6 +67,7 @@ const addToQueue = async (req, res) => {
 }
 
 const getLibrary = async (req, res) => {
+	res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
 	if (!req.userId) {
 		return res.status(400).json({
 			user: null,
@@ -81,8 +82,6 @@ const getLibrary = async (req, res) => {
 				errorMessage: "Unauthorized",
 			});
 		}
-
-		res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
 
 		const response = await api.getLibrary(user);
 
@@ -93,6 +92,7 @@ const getLibrary = async (req, res) => {
 }
 
 const getPlaylist = async (req, res) => {
+	res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
 	if (!req.userId) {
 		return res.status(400).json({
 			user: null,
@@ -107,8 +107,6 @@ const getPlaylist = async (req, res) => {
 				errorMessage: "Unauthorized",
 			});
 		}
-
-		res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
 
 		const response = req.params.id === "liked" ? await api.getLikedSongs(user) : await api.getPlaylist(user, req.params.id);
 
