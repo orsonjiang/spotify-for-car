@@ -20,7 +20,7 @@ import {
 
 import store from "../../store";
 import { setView } from "../../actions";
-import { fetchQueue, fetchRoomDetails, fetchUser, fetchLibrary } from '../../helpers';
+import { fetchQueue, fetchRoomDetails, fetchUser, fetchLibrary } from '../../helpers/fetch';
 
 const MainPage = () => {
     const roomId = useParams()['*'];
