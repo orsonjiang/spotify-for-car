@@ -14,11 +14,18 @@ export const fetchQueue = async (roomId) => {
 };
 
 export const fetchUser = async () => {
-	const response = await auth.getProfile();
-	store.dispatch(setUser(response.data.user));
+	try {
+		const response = await auth.getProfile();
+		store.dispatch(setUser(response.data.user));
+	} catch {
+	}
 };
 
 export const fetchLibrary = async () => {
-	const res = await api.getLibrary();
-	store.dispatch(setLibrary(res.data.items));
+	try {
+		const res = await api.getLibrary();
+		store.dispatch(setLibrary(res.data.items));
+	} catch {
+
+	}
 }

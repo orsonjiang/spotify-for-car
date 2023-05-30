@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 const verify = (req, res, next) => {
+    res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
     try {
         const token = req.cookies.token;
         if (!token) {
