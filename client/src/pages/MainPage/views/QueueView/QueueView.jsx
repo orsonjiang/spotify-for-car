@@ -1,10 +1,21 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import Navbar from '../../components/Navbar';
 import SongCard from '../../components/SongCard';
-
+import { fetchQueue } from '../../../../helpers/fetch';
 
 const QueueView = () => {
+    const roomId = useParams()['*'];
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            fetchQueue(roomId);
+        }, 15000);
+        return () => clearInterval(interval);
+    }, []);
+
     const queueData = useSelector((state) => state.queue);
 
     let i = 0;
