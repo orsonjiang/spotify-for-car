@@ -12,7 +12,7 @@ const QueueView = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             fetchQueue(roomId);
-        }, 15000);
+        }, 2000);
         return () => clearInterval(interval);
     }, []);
 
