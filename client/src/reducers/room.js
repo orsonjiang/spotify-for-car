@@ -1,4 +1,4 @@
-import { SET_ROOM } from "../constants/action-types";
+import { SET_ROOM } from "../constants/actionTypes";
 
 const initialState = {
 	picture_url: "",

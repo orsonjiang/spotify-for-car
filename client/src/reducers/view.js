@@ -1,7 +1,7 @@
-import { SET_VIEW } from "../constants/action-types";
+import { SET_VIEW } from "../constants/actionTypes";
 import {
 	VIEW_HOME,
-} from "../constants/view-types";
+} from "../constants/viewTypes";
 
 const initialState = {
 	globalView: VIEW_HOME,

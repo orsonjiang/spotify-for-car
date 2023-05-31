@@ -1,4 +1,4 @@
-import { SET_SEARCH_RESULTS, SET_ADDED_SONG } from "../constants/action-types";
+import { SET_SEARCH_RESULTS, SET_ADDED_SONG } from "../constants/actionTypes";
 
 const initialState = {
 	results: [],

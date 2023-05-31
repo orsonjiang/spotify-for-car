@@ -7,7 +7,7 @@ import {
     VIEW_SEARCH,
     VIEW_LIBRARY,
     VIEW_SETTINGS,
-} from '../../../constants/view-types';
+} from '../../../constants/viewTypes';
 
 const BottomNavbar = () => {
     const { playlist } = useSelector((state) => state.library);
