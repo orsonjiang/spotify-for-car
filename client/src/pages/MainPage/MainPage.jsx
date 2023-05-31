@@ -1,26 +1,31 @@
 import { useEffect } from 'react';
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-import HomeView from "./views/HomeView/HomeView";
-import QueueView from "./views/QueueView/QueueView";
-import SearchView from "./views/SearchView/SearchView";
+import HomeView from './views/HomeView/HomeView';
+import QueueView from './views/QueueView/QueueView';
+import SearchView from './views/SearchView/SearchView';
 import LibraryView from './views/LibraryView/LibraryView';
-import SettingsView from "./views/SettingsView/SettingsView";
+import SettingsView from './views/SettingsView/SettingsView';
 
-import BottomNavbar from "./components/BottomNavbar";
+import BottomNavbar from './components/BottomNavbar';
 
 import {
-	VIEW_HOME,
-	VIEW_QUEUE,
-	VIEW_SEARCH,
-	VIEW_LIBRARY,
-	VIEW_SETTINGS,
-} from "../../constants/view-types";
+    VIEW_HOME,
+    VIEW_QUEUE,
+    VIEW_SEARCH,
+    VIEW_LIBRARY,
+    VIEW_SETTINGS,
+} from '../../constants/viewTypes';
 
-import store from "../../store";
-import { setView } from "../../actions";
-import { fetchQueue, fetchRoomDetails, fetchUser, fetchLibrary } from '../../helpers/fetch';
+import store from '../../store';
+import { setView } from '../../actions';
+import {
+    fetchQueue,
+    fetchRoomDetails,
+    fetchUser,
+    fetchLibrary,
+} from '../../helpers/fetch';
 
 const MainPage = () => {
     const roomId = useParams()['*'];
@@ -42,16 +47,16 @@ const MainPage = () => {
         case VIEW_HOME:
             return <HomeView />;
         case VIEW_QUEUE:
-            view = <QueueView />
+            view = <QueueView />;
             break;
         case VIEW_SEARCH:
-            view = <SearchView />
+            view = <SearchView />;
             break;
         case VIEW_LIBRARY:
-            view = <LibraryView />
+            view = <LibraryView />;
             break;
         case VIEW_SETTINGS:
-            view = <SettingsView />
+            view = <SettingsView />;
             break;
         default:
             break;
@@ -59,9 +64,7 @@ const MainPage = () => {
 
     return (
         <div>
-            <div className='mb-20'>
-                {view}
-            </div>
+            <div className="mb-20">{view}</div>
             <BottomNavbar />
         </div>
     );

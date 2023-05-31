@@ -8,7 +8,7 @@ import {
 	SET_ADDED_SONG,
 	SET_USER,
 	SET_VIEW,
-} from "../constants/action-types";
+} from "../constants/actionTypes";
 
 export const setPlaylist = (playlist) => ({
 	type: SET_PLAYLIST,

@@ -1,4 +1,4 @@
-import { SET_PLAYLIST, SET_LIBRARY, ADD_PLAYLIST_CACHE } from "../constants/action-types";
+import { SET_PLAYLIST, SET_LIBRARY, ADD_PLAYLIST_CACHE } from "../constants/actionTypes";
 
 const initialState = {
 	library: [],
