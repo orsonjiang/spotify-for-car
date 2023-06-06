@@ -28,7 +28,7 @@ const BottomNavbar = () => {
         <div className="mx-auto grid h-full max-w-lg grid-cols-4 font-medium">
             <button
                 type="button"
-                className="group inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
+                className="group inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50className="
                 onClick={() => store.dispatch(setView(VIEW_QUEUE))}
             >
                 <svg
@@ -52,7 +52,7 @@ const BottomNavbar = () => {
             </button>
             <button
                 type="button"
-                className="group inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
+                className="group inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50className="
                 onClick={() => store.dispatch(setView(VIEW_SEARCH))}
             >
                 <svg
@@ -76,7 +76,7 @@ const BottomNavbar = () => {
             </button>
             <button
                 type="button"
-                className="group inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
+                className="group inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50className="
                 onClick={() => store.dispatch(setView(VIEW_LIBRARY))}
             >
                 <svg
@@ -98,7 +98,7 @@ const BottomNavbar = () => {
             </button>
             <button
                 type="button"
-                className="group inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
+                className="group inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50className="
                 onClick={() => store.dispatch(setView(VIEW_SETTINGS))}
             >
                 <svg
@@ -122,7 +122,7 @@ const BottomNavbar = () => {
             <div className="mx-auto grid h-full max-w-lg grid-cols-1 font-medium">
                 <button
                     type="button"
-                    className="group inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
+                    className="group inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50className="
                     onClick={handleClearPlaylist}
                 >
                     <svg
