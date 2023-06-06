@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import {
     LOADING_VIEW,
     ERROR_VIEW,
@@ -6,8 +7,8 @@ import {
     MISC_VIEW,
 } from '../../../constants/alertTypes';
 
-const Alert = (props) => {
-    const { title, message, type, isVisible } = props;
+const Alert = () => {
+    const { title, message, type, isVisible } = useSelector((state) => state.alert);
 
     if (!isVisible) {
         return '';
@@ -77,11 +78,6 @@ const Alert = (props) => {
     return (
         <div className={classNameStr}>
             {icon}
-            <div className="inline text-left">
-                <div className="font-medium">Playlist Loading</div>
-                If you have a lot of songs in your playlist, this might take a
-                second.
-            </div>
             <div className="inline text-left">
                 <div className="font-medium">{title}</div>
                 {message}
