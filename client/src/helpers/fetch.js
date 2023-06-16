@@ -1,10 +1,12 @@
 import api from "../api/api";
 import auth from "../api/authApi";
 import store from "../store";
-import { setRoom, setQueue, setUser, setLibrary } from "../actions";
+import { setRoom, setQueue, setUser, setLibrary, setAlert, clearAlert } from "../actions";
+import { LOADING_VIEW } from "../constants/alertTypes";
 
 export const fetchRoomDetails = async (roomId) => {
 	let details = await api.getRoom(roomId)
+	store.dispatch(clearAlert())
 	store.dispatch(setRoom(details.data));
 };
 
