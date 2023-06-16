@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
+import LoadingView from './views/LoadingView/LoadingView';
 import HomeView from './views/HomeView/HomeView';
 import QueueView from './views/QueueView/QueueView';
 import SearchView from './views/SearchView/SearchView';
@@ -12,6 +13,7 @@ import Alert from './components/Alert';
 import BottomNavbar from './components/BottomNavbar';
 
 import {
+    VIEW_LOADING,
     VIEW_HOME,
     VIEW_QUEUE,
     VIEW_SEARCH,
@@ -20,33 +22,51 @@ import {
 } from '../../constants/viewTypes';
 
 import store from '../../store';
-import { setView } from '../../actions';
+import { setView, setAlert } from '../../actions';
 import {
     fetchQueue,
     fetchRoomDetails,
     fetchUser,
     fetchLibrary,
 } from '../../helpers/fetch';
+import { LOADING_VIEW } from '../../constants/alertTypes';
 
 const MainPage = () => {
     const roomId = useParams()['*'];
+    const { user } = useSelector((state) => state.user);
+    const { displayName } = useSelector((state) => state.room);
     const { globalView } = useSelector((state) => state.view);
 
     useEffect(() => {
-        fetchRoomDetails(roomId);
-        fetchQueue(roomId);
-        fetchUser().then(fetchLibrary());
-    }, []);
+        if (user.displayName === "") {
+            fetchUser().then(fetchLibrary());
+        }
+
+        if (roomId !== "" && displayName === "") {
+            fetchRoomDetails(roomId);
+            fetchQueue(roomId);
+        }
+
+        if (globalView === VIEW_HOME && roomId !== "") {
+            store.dispatch(setView(VIEW_LOADING));
+            store.dispatch(setAlert("Room Loading", "Attempting to find room.", LOADING_VIEW))
+        } else if (globalView === VIEW_LOADING && displayName !== "") {
+            store.dispatch(setView(VIEW_QUEUE));
+        }
+    }, [displayName]);
 
     let view;
-
-    if (roomId && globalView == VIEW_HOME) {
-        store.dispatch(setView(VIEW_QUEUE));
-    }
+    let isBottomNavbar = true;
 
     switch (globalView) {
+        case VIEW_LOADING:
+            view = <LoadingView />;
+            isBottomNavbar = false;
+            break;
         case VIEW_HOME:
-            return <HomeView />;
+            view = <HomeView />;
+            isBottomNavbar = false;
+            break;
         case VIEW_QUEUE:
             view = <QueueView />;
             break;
@@ -67,7 +87,7 @@ const MainPage = () => {
         <div>
             <Alert />
             <div className="mb-20">{view}</div>
-            <BottomNavbar />
+            {isBottomNavbar ? <BottomNavbar /> : ""}
         </div>
     );
 };
