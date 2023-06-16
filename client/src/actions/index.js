@@ -1,4 +1,5 @@
 import {
+	SET_ALERT,
 	SET_PLAYLIST,
 	SET_LIBRARY,
 	ADD_PLAYLIST_CACHE,
@@ -8,7 +9,27 @@ import {
 	SET_ADDED_SONG,
 	SET_USER,
 	SET_VIEW,
-} from "../constants/action-types";
+} from "../constants/actionTypes";
+
+export const setAlert = (title, message, type) => ({
+	type: SET_ALERT,
+	payload: {
+		title: title,
+		message: message,
+		type: type,
+		isVisible: true,
+	}
+})
+
+export const clearAlert = () => ({
+	type: SET_ALERT,
+	payload: {
+		title: "",
+		message: "",
+		type: "",
+		isVisible: false,
+	}
+})
 
 export const setPlaylist = (playlist) => ({
 	type: SET_PLAYLIST,

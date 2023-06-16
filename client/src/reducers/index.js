@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import alert from "./alert";
 import library from "./library";
 import queue from "./queue";
 import room from "./room";
@@ -7,6 +8,7 @@ import user from "./user";
 import view from "./view";
 
 export default combineReducers({
+	alert,
 	library,
 	queue,
 	room,

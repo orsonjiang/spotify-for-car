@@ -1,3 +1,4 @@
+export const VIEW_LOADING = "VIEW_LOADING";
 export const VIEW_HOME = "VIEW_HOME";
 export const VIEW_QUEUE = "VIEW_QUEUE";
 export const VIEW_SEARCH = "VIEW_SEARCH";

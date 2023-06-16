@@ -7,7 +7,7 @@ import {
     VIEW_SEARCH,
     VIEW_LIBRARY,
     VIEW_SETTINGS,
-} from '../../../constants/view-types';
+} from '../../../constants/viewTypes';
 
 const BottomNavbar = () => {
     const { playlist } = useSelector((state) => state.library);
@@ -24,11 +24,13 @@ const BottomNavbar = () => {
     const libraryButtonClass = generateButtonClass(VIEW_LIBRARY);
     const settingButtonClass = generateButtonClass(VIEW_SETTINGS);
 
+    const buttonClassName = 'group inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-zinc-800';
+
     let content = (
         <div className="mx-auto grid h-full max-w-lg grid-cols-4 font-medium">
             <button
                 type="button"
-                className="group inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
+                className={buttonClassName}
                 onClick={() => store.dispatch(setView(VIEW_QUEUE))}
             >
                 <svg
@@ -52,7 +54,7 @@ const BottomNavbar = () => {
             </button>
             <button
                 type="button"
-                className="group inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
+                className={buttonClassName}
                 onClick={() => store.dispatch(setView(VIEW_SEARCH))}
             >
                 <svg
@@ -76,7 +78,7 @@ const BottomNavbar = () => {
             </button>
             <button
                 type="button"
-                className="group inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
+                className={buttonClassName}
                 onClick={() => store.dispatch(setView(VIEW_LIBRARY))}
             >
                 <svg
@@ -98,7 +100,7 @@ const BottomNavbar = () => {
             </button>
             <button
                 type="button"
-                className="group inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
+                className={buttonClassName}
                 onClick={() => store.dispatch(setView(VIEW_SETTINGS))}
             >
                 <svg
@@ -122,7 +124,7 @@ const BottomNavbar = () => {
             <div className="mx-auto grid h-full max-w-lg grid-cols-1 font-medium">
                 <button
                     type="button"
-                    className="group inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
+                    className={buttonClassName}
                     onClick={handleClearPlaylist}
                 >
                     <svg
@@ -149,7 +151,7 @@ const BottomNavbar = () => {
     }
 
     return (
-        <div className="fixed bottom-0 left-0 z-50 h-16 w-full border-t border-gray-200 bg-white dark:border-gray-600 dark:bg-gray-700">
+        <div className="fixed bottom-0 left-0 z-50 h-16 w-full border-t border-gray-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
             {content}
         </div>
     );

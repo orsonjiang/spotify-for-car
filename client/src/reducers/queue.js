@@ -1,4 +1,4 @@
-import { SET_QUEUE } from "../constants/action-types";
+import { SET_QUEUE } from "../constants/actionTypes";
 
 const initialState = {
 	currentSong: undefined,

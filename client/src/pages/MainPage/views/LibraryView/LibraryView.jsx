@@ -2,7 +2,8 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import LIKED_SONGS from "../../../../assets/liked-songs.png"
-import { setAddedSong, setQueue, setPlaylist, addPlaylistCache } from '../../../../actions';
+import { LOADING_VIEW } from '../../../../constants/alertTypes';
+import { setAddedSong, setQueue, setPlaylist, addPlaylistCache, setAlert, clearAlert } from '../../../../actions';
 import store from '../../../../store';
 import api from '../../../../api/api';
 import PlaylistCard from './components/PlaylistCard';
@@ -34,9 +35,11 @@ const LibraryView = () => {
         if (playlistCache[id] != null) {
             data = playlistCache[id];
         } else {
+            store.dispatch(setAlert("Playlist Loading", "If you have a lot of songs in your playlist, this might take a second.", LOADING_VIEW))
             const res = await api.getPlaylist(id);
             data = res.data;
-            store.dispatch(addPlaylistCache(id, res.data))
+            store.dispatch(clearAlert());
+            store.dispatch(addPlaylistCache(id, res.data));
         }
         store.dispatch(
             setPlaylist({

@@ -7,7 +7,8 @@ const getRoom = async (req, res) => {
 	res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
 	User.findOne({ url: req.params.url }, async (err, user) => {
 		if (err || !user) {
-			return res.status(400);
+			res.status(400);
+			return res.end()
 		}
 
 		res.status(200).json({
@@ -22,7 +23,8 @@ const getQueue = async (req, res) => {
 	res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
 	User.findOne({ url: req.params.url }, async (err, user) => {
 		if (err || !user) {
-			return res.status(400);
+			res.status(400);
+			return res.end()
 		}
 
 		const queue = await api.getQueue(user);
@@ -38,7 +40,8 @@ const search = async (req, res) => {
 	res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
 	User.findOne({ url: req.params.url }, async (err, user) => {
 		if (err || !req.query || !req.query.q) {
-			return res.status(400);
+			res.status(400);
+			return res.end()
 		}
 
 		const results = await api.search(user, req.query.q);
@@ -51,7 +54,8 @@ const addToQueue = async (req, res) => {
 	res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
 	User.findOne({ url: req.params.url }, async (err, user) => {
 		if (err || !req.query || !req.query.id) {
-			return res.status(400);
+			res.status(400);
+			return res.end();
 		}
 
 		const response = await api.addToQueue(user, req.query.id);
