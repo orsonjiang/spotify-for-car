@@ -12,7 +12,7 @@ const app = express();
 // SETUP THE MIDDLEWARE
 app.use(express.urlencoded({ extended: true }))
 app.use(cors({
-    origin: ["http://localhost:"+PORT],
+    origin: [process.env.SERVER_URL],
     credentials: true
 }))
 app.use(express.json())
@@ -30,4 +30,4 @@ const db = require('./db')
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 // PUT THE SERVER IN LISTENING MODE
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+app.listen(PORT, "0.0.0.0", () => console.log(`Server running on port ${PORT}`))
