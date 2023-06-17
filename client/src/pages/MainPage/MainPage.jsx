@@ -50,7 +50,7 @@ const MainPage = () => {
         if (globalView === VIEW_HOME && roomId !== "") {
             store.dispatch(setView(VIEW_LOADING));
             store.dispatch(setAlert("Room Loading", "Attempting to find room.", LOADING_VIEW))
-        } else if (globalView === VIEW_LOADING && displayName !== "") {
+        } else if (globalView === VIEW_LOADING && displayName !== "" && displayName != null) {
             store.dispatch(setView(VIEW_QUEUE));
         }
     }, [displayName]);
