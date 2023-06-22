@@ -103,6 +103,7 @@ const profile = async (req, res) => {
 			user: null,
 			errorMessage: "Unauthorized",
 		});
+        res.end()
 	}
 
 	User.findOne({ _id: req.userId }, async (err, user) => {
@@ -111,6 +112,7 @@ const profile = async (req, res) => {
 				user: null,
 				errorMessage: "Unauthorized",
 			});
+            res.end()
 		}
 
 		res.status(200).json({
@@ -121,7 +123,6 @@ const profile = async (req, res) => {
                 id: user.spotifyId
 			},
 		});
-
 		res.end();
 	})
 }
