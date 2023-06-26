@@ -1,0 +1,37 @@
+name: Deploy to Google App Engine
+
+on:
+  push:
+    branches: [ 'main' ]
+
+jobs:
+  deploy:
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        id: 'checkout'
+        uses: actions/checkout@v3
+
+      - name: 'Auth'
+        id: 'auth'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
+          service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
+
+      - name: 'Deploy'
+        id: 'deploy'
+        uses: 'google-github-actions/deploy-appengine@v1'
+        with:
+          project_id: ${{ vars.PROJECT_ID }}
+          working_directory: ./server/ # Assuming server folder location is at ./server/
+          env_vars: |-
+            CLIENT_URL=${{ vars.CLIENT_URL }}
+            SERVER_URL=${{ vars.SERVER_URL }}
+            DB_CONNECT=${{ secrets.DB_CONNECT }}
+            CLIENT_ID=${{ secrets.CLIENT_ID }}
+            CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}
+            JWT_SECRET=${{ secrets.JWT_SECRET }}
