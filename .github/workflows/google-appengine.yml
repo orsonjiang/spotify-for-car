@@ -29,9 +29,9 @@ jobs:
           project_id: ${{ vars.PROJECT_ID }}
           working_directory: ./server/ # Assuming server folder location is at ./server/
           env_vars: |-
-            CLIENT_URL=${{ vars.CLIENT_URL }}
-            SERVER_URL=${{ vars.SERVER_URL }}
-            DB_CONNECT=${{ secrets.DB_CONNECT }}
-            CLIENT_ID=${{ secrets.CLIENT_ID }}
-            CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}
-            JWT_SECRET=${{ secrets.JWT_SECRET }}
+            CLIENT_URL='${{ vars.CLIENT_URL }}'
+            SERVER_URL='${{ vars.SERVER_URL }}'
+            DB_CONNECT='${{ secrets.DB_CONNECT }}'
+            CLIENT_ID='${{ secrets.CLIENT_ID }}'
+            CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}'
+            JWT_SECRET='${{ secrets.JWT_SECRET }}'
