@@ -5,7 +5,7 @@ import {
     SUCCESS_VIEW,
     WARNING_VIEW,
     MISC_VIEW,
-} from '../../../constants/alertTypes';
+} from '../../constants/alertTypes';
 
 const Alert = () => {
     const { title, message, type, isVisible } = useSelector((state) => state.alert);
