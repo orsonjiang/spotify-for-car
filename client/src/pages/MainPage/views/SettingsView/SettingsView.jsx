@@ -18,7 +18,7 @@ const SettingsView = () => {
             });
         } else {
             navigator.clipboard.writeText(url);
-            runAlert("Share Success!", "The URL to this room has been copied to your clipboard", SUCCESS_VIEW);
+            runAlert("Share Success", "The URL to this room has been copied to your clipboard!", SUCCESS_VIEW);
         }
     };
 
