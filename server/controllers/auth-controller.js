@@ -2,6 +2,7 @@ const axios = require('axios');
 const qs = require('qs');
 const User = require("../models/user-model");
 const auth = require("../auth");
+const api = require("../api/spotify");
 
 require('dotenv').config();
 
