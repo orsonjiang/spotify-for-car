@@ -127,9 +127,61 @@ const profile = async (req, res) => {
 	})
 }
 
+const getLibrary = async (req, res) => {
+	res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
+	if (!req.userId) {
+		return res.status(400).json({
+			user: null,
+			errorMessage: "Unauthorized",
+		});
+	}
+
+	User.findOne({ _id: req.userId }, async (err, user) => {
+		if (err || !user) {
+			return res.status(400).json({
+				user: null,
+				errorMessage: "Unauthorized",
+			});
+		}
+
+		const response = await api.getLibrary(user);
+
+		res.status(200).json(response);
+
+		res.end();
+	})
+}
+
+const getPlaylist = async (req, res) => {
+	res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
+	if (!req.userId) {
+		return res.status(400).json({
+			user: null,
+			errorMessage: "Unauthorized",
+		});
+	}
+
+	User.findOne({ _id: req.userId }, async (err, user) => {
+		if (err || !user) {
+			return res.status(400).json({
+				user: null,
+				errorMessage: "Unauthorized",
+			});
+		}
+
+		const response = req.params.id === "liked" ? await api.getLikedSongs(user) : await api.getPlaylist(user, req.params.id);
+
+		res.status(200).json(response);
+
+		res.end();
+	})
+}
+
 module.exports = {
     login,
     loginCallback,
     logout,
     profile,
+    getLibrary,
+	getPlaylist,
 }

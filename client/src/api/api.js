@@ -15,16 +15,12 @@ const search = (id, text) => api.get(`/${id}/search?` + qs.stringify({
 const addToQueue = (id, trackId) => api.post(`/${id}/add?` + qs.stringify({
 	id: trackId
 }));
-const getLibrary = () => api.get(`/myLibrary`);
-const getPlaylist = (id) => api.get(`/myPlaylist/${id}`);
 
 const apis = {
 	getRoom,
 	getQueue,
 	search,
 	addToQueue,
-	getLibrary,
-	getPlaylist,
 };
 
 export default apis;
