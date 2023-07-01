@@ -2,9 +2,11 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import LIKED_SONGS from "../../../../assets/liked-songs.png"
-import { LOADING_VIEW } from '../../../../constants/alertTypes';
+import { LOADING_VIEW, SUCCESS_VIEW } from '../../../../constants/alertTypes';
+import { runAlert } from "../../../../helpers/alert";
 import { setAddedSong, setQueue, setPlaylist, addPlaylistCache, setAlert, clearAlert } from '../../../../actions';
 import store from '../../../../store';
+import api from "../../../../api/api";
 import auth from '../../../../api/authApi';
 import PlaylistCard from './components/PlaylistCard';
 import SongCard from '../../components/SongCard';
@@ -50,9 +52,10 @@ const LibraryView = () => {
         
     };
 
-    const handleAddSong = async (trackId) => {
+    const handleAddSong = async (trackId, trackName) => {
         let addSong = await api.addToQueue(roomId, trackId);
         if (addSong.status == 200) {
+            runAlert("Song Added", `${trackName}has been added to the queue!`, SUCCESS_VIEW, 4000);
             store.dispatch(setAddedSong(trackId));
             let queue = await api.getQueue(roomId);
             store.dispatch(setQueue(queue.data));

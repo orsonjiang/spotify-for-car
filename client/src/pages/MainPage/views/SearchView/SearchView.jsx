@@ -2,6 +2,8 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 
+import { SUCCESS_VIEW } from '../../../../constants/alertTypes';
+import { runAlert } from "../../../../helpers/alert";
 import {
     setSearchResults,
     setAddedSong,
@@ -34,10 +36,12 @@ const SearchView = () => {
         store.dispatch(setSearchResults(search.data.tracks.items));
     };
 
-    const handleAddSong = async (trackId) => {
+    const handleAddSong = async (trackId, trackName) => {
+        console.log(trackName)
         setSearchText("");
         let addSong = await api.addToQueue(roomId, trackId);
         if (addSong.status == 200) {
+            runAlert("Song Added", `${trackName}has been added to the queue!`, SUCCESS_VIEW, 4000);
             store.dispatch(setAddedSong(trackId));
             let queue = await api.getQueue(roomId);
             store.dispatch(setQueue(queue.data));
