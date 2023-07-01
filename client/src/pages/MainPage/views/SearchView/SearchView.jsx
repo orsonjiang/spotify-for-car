@@ -37,7 +37,6 @@ const SearchView = () => {
     };
 
     const handleAddSong = async (trackId, trackName) => {
-        console.log(trackName)
         setSearchText("");
         let addSong = await api.addToQueue(roomId, trackId);
         if (addSong.status == 200) {
