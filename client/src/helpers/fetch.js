@@ -30,6 +30,6 @@ export const fetchUser = async () => {
 };
 
 export const fetchLibrary = async () => {
-	const res = await api.getLibrary();
+	const res = await auth.getLibrary();
 	store.dispatch(setLibrary(res.data.items));
 }
