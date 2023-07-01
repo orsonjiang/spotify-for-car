@@ -25,18 +25,11 @@ export const fetchQueue = async (roomId) => {
 };
 
 export const fetchUser = async () => {
-	try {
-		const response = await auth.getProfile();
-		store.dispatch(setUser(response.data.user));
-	} catch {
-	}
+	const response = await auth.getProfile();
+	store.dispatch(setUser(response.data.user));
 };
 
 export const fetchLibrary = async () => {
-	try {
-		const res = await api.getLibrary();
-		store.dispatch(setLibrary(res.data.items));
-	} catch {
-
-	}
+	const res = await auth.getLibrary();
+	store.dispatch(setLibrary(res.data.items));
 }

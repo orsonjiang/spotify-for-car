@@ -7,9 +7,13 @@ const api = axios.create({
 })
 
 const getProfile = () => api.get(`/profile`);
+const getLibrary = () => api.get(`/myLibrary`);
+const getPlaylist = (id) => api.get(`/myPlaylist/${id}`);
 
 const apis = {
 	getProfile,
+	getLibrary,
+	getPlaylist,
 };
 
 export default apis;

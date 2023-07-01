@@ -9,7 +9,6 @@ import SearchView from './views/SearchView/SearchView';
 import LibraryView from './views/LibraryView/LibraryView';
 import SettingsView from './views/SettingsView/SettingsView';
 
-import Alert from './components/Alert';
 import BottomNavbar from './components/BottomNavbar';
 
 import {
@@ -85,7 +84,6 @@ const MainPage = () => {
 
     return (
         <div>
-            <Alert />
             <div className="mb-20">{view}</div>
             {isBottomNavbar ? <BottomNavbar /> : ""}
         </div>

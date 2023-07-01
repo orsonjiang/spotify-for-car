@@ -5,7 +5,7 @@ import LIKED_SONGS from "../../../../assets/liked-songs.png"
 import { LOADING_VIEW } from '../../../../constants/alertTypes';
 import { setAddedSong, setQueue, setPlaylist, addPlaylistCache, setAlert, clearAlert } from '../../../../actions';
 import store from '../../../../store';
-import api from '../../../../api/api';
+import auth from '../../../../api/authApi';
 import PlaylistCard from './components/PlaylistCard';
 import SongCard from '../../components/SongCard';
 import LoginButton from '../../components/LoginButton';
@@ -36,7 +36,7 @@ const LibraryView = () => {
             data = playlistCache[id];
         } else {
             store.dispatch(setAlert("Playlist Loading", "If you have a lot of songs in your playlist, this might take a second.", LOADING_VIEW))
-            const res = await api.getPlaylist(id);
+            const res = await auth.getPlaylist(id);
             data = res.data;
             store.dispatch(clearAlert());
             store.dispatch(addPlaylistCache(id, res.data));
@@ -66,10 +66,7 @@ const LibraryView = () => {
             <div className="mx-16">
                 <div className="m-8 text-3xl">My Library</div>
                 <div className="text-lg">
-                    Login to access your playlists.
-                    <br />
-                    <br />
-                    You will have to rejoin this room after you login.
+                    Login to add songs from your library.
                 </div>
                 <div className="my-8">
                     <LoginButton />

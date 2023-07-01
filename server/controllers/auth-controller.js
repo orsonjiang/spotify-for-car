@@ -2,25 +2,46 @@ const axios = require('axios');
 const qs = require('qs');
 const User = require("../models/user-model");
 const auth = require("../auth");
+const api = require("../api/spotify");
+const crypto = require("crypto");
 
 require('dotenv').config();
 
 const login = (req, res) => {
+    const state = crypto.randomBytes(16).toString('hex');
+    res.cookie(state, JSON.stringify({
+        location: req.query.location
+    }));
+
     const scope = ['user-read-playback-state', 'user-modify-playback-state', 'user-read-private', 'playlist-read-private', 'playlist-read-collaborative', 'user-library-read'].join(" ");
     const query = qs.stringify({
         response_type: 'code',
         client_id: process.env.CLIENT_ID,
         scope: scope,
-        redirect_uri: process.env.SERVER_URL + "/auth/login/callback",
+        redirect_uri: process.env.SERVER_URL + "/auth/callback",
+        state: state,
     });
 
     res.redirect('https://accounts.spotify.com/authorize?' + query);
 }
 
-const loginCallback = async (req, res) => {
-    try {
-        let date = new Date();
+const callback = async (req, res) => {
+    if (!req.query.code || !req.query.state) {
+        res.redirect(`${process.env.CLIENT_URL}/error`);
+    }
 
+    const stateCookie = req.cookies ? req.cookies[req.query.state] : null;
+
+    if (stateCookie === null) {
+        res.redirect(`${process.env.CLIENT_URL}/error?msg=statemm`);
+    }
+
+    res.clearCookie(req.query.state);
+    const stateObject = JSON.parse(stateCookie);
+
+    const date = new Date();
+
+    try {
         const credReq = await axios({
             method: 'post',
             url: 'https://accounts.spotify.com/api/token',
@@ -31,7 +52,7 @@ const loginCallback = async (req, res) => {
             data: qs.stringify({
                 'grant_type': 'authorization_code',
                 'code': req.query.code,
-                'redirect_uri': process.env.SERVER_URL + "/auth/login/callback",
+                'redirect_uri': process.env.SERVER_URL + "/auth/callback",
             })
         });
 
@@ -74,15 +95,15 @@ const loginCallback = async (req, res) => {
             secure: true,
             sameSite: true,
         })
-        res.redirect(`${process.env.CLIENT_URL}/${url}`);
+        if (stateObject.location === '/') {
+            res.redirect(`${process.env.CLIENT_URL}/${url}`);
+        } else {
+            res.redirect(`${process.env.CLIENT_URL}${stateObject.location}`);
+        }
 
     } catch (err) {
         res.redirect(`${process.env.CLIENT_URL}/error`);
-        // return res.status(400).json({
-        //     errorMessage: "Unable to verify account with Spotify. Most likely you are not whitelisted.",
-        //     err: err
-        // });
-        // console.log(err)
+        console.log(err)
     }
 }
 
@@ -127,9 +148,61 @@ const profile = async (req, res) => {
 	})
 }
 
+const getLibrary = async (req, res) => {
+	res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
+	if (!req.userId) {
+		return res.status(400).json({
+			user: null,
+			errorMessage: "Unauthorized",
+		});
+	}
+
+	User.findOne({ _id: req.userId }, async (err, user) => {
+		if (err || !user) {
+			return res.status(400).json({
+				user: null,
+				errorMessage: "Unauthorized",
+			});
+		}
+
+		const response = await api.getLibrary(user);
+
+		res.status(200).json(response);
+
+		res.end();
+	})
+}
+
+const getPlaylist = async (req, res) => {
+	res.set("Access-Control-Allow-Origin", process.env.CLIENT_URL);
+	if (!req.userId) {
+		return res.status(400).json({
+			user: null,
+			errorMessage: "Unauthorized",
+		});
+	}
+
+	User.findOne({ _id: req.userId }, async (err, user) => {
+		if (err || !user) {
+			return res.status(400).json({
+				user: null,
+				errorMessage: "Unauthorized",
+			});
+		}
+
+		const response = req.params.id === "liked" ? await api.getLikedSongs(user) : await api.getPlaylist(user, req.params.id);
+
+		res.status(200).json(response);
+
+		res.end();
+	})
+}
+
 module.exports = {
     login,
-    loginCallback,
+    callback,
     logout,
     profile,
+    getLibrary,
+	getPlaylist,
 }
