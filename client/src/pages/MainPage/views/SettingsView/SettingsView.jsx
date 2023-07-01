@@ -1,5 +1,7 @@
 import { useSelector } from 'react-redux';
 
+import { runAlert } from '../../../../helpers/alert';
+import { SUCCESS_VIEW } from '../../../../constants/alertTypes';
 import Navbar from "../../components/Navbar";
 import LoginButton from '../../components/LoginButton';
 
@@ -10,9 +12,14 @@ const SettingsView = () => {
     const { owner_id } = useSelector((state) => state.room);
 
     const handleShare = (url) => {
-        navigator.share({
-            url: url,
-        });
+        if (navigator.share) {
+            navigator.share({
+                url: url,
+            });
+        } else {
+            navigator.clipboard.writeText(url);
+            runAlert("Share Success!", "The URL to this room has been copied to your clipboard", SUCCESS_VIEW);
+        }
     };
 
     let content;
