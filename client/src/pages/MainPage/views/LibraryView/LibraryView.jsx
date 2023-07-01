@@ -66,10 +66,7 @@ const LibraryView = () => {
             <div className="mx-16">
                 <div className="m-8 text-3xl">My Library</div>
                 <div className="text-lg">
-                    Login to access your playlists.
-                    <br />
-                    <br />
-                    You will have to rejoin this room after you login.
+                    Login to add songs from your library.
                 </div>
                 <div className="my-8">
                     <LoginButton />
