@@ -4,6 +4,6 @@ import { sleep } from "./utils";
 
 export const runAlert = async (title, message, type, duration) => {
 	store.dispatch(setAlert(title, message, type));
-	sleep(duration)
+	await sleep(duration)
 	store.dispatch(clearAlert());
 };
