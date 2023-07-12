@@ -55,7 +55,7 @@ const LibraryView = () => {
     const handleAddSong = async (trackId, trackName) => {
         let addSong = await api.addToQueue(roomId, trackId);
         if (addSong.status == 200) {
-            runAlert("Song Added", `${trackName}has been added to the queue!`, SUCCESS_VIEW);
+            runAlert("Song Added", `${trackName} has been added to the queue!`, SUCCESS_VIEW);
             store.dispatch(setAddedSong(trackId));
             let queue = await api.getQueue(roomId);
             store.dispatch(setQueue(queue.data));
