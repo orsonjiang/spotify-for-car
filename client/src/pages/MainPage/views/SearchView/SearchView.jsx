@@ -16,7 +16,8 @@ import Navbar from '../../components/Navbar';
 import SongCard from '../../components/SongCard';
 
 const SearchView = () => {
-    const roomId = useParams()['*'];
+    const actualRoomId = useParams()['*']
+    const roomId = actualRoomId === "demo" ? import.meta.env.VITE_DEMO_API : actualRoomId;
 
     const { results } = useSelector((state) => state.search);
 
@@ -37,6 +38,9 @@ const SearchView = () => {
     };
 
     const handleAddSong = async (trackId, trackName) => {
+        if (actualRoomId === "demo") {
+            return;
+        }
         setSearchText("");
         let addSong = await api.addToQueue(roomId, trackId);
         if (addSong.status == 200) {

@@ -21,7 +21,7 @@ import {
 } from '../../constants/viewTypes';
 
 import store from '../../store';
-import { setView, setAlert } from '../../actions';
+import { setView, setAlert, setQueue, setRoom } from '../../actions';
 import {
     fetchQueue,
     fetchRoomDetails,
@@ -30,6 +30,9 @@ import {
 } from '../../helpers/fetch';
 import { LOADING_VIEW } from '../../constants/alertTypes';
 
+import queue from "../../fixtures/queue.json";
+import room from "../../fixtures/room.json";
+
 const MainPage = () => {
     const roomId = useParams()['*'];
     const { user } = useSelector((state) => state.user);
@@ -37,6 +40,13 @@ const MainPage = () => {
     const { globalView } = useSelector((state) => state.view);
 
     useEffect(() => {
+        if (roomId === "demo") {
+            store.dispatch(setView(VIEW_QUEUE));
+            store.dispatch(setRoom(room));
+            store.dispatch(setQueue(queue));
+            return;
+        }
+        
         if (user.displayName === "") {
             fetchUser().then(fetchLibrary());
         }

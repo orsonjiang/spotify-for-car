@@ -13,7 +13,9 @@ import SongCard from '../../components/SongCard';
 import LoginButton from '../../components/LoginButton';
 
 const LibraryView = () => {
-    const roomId = useParams()['*'];
+    const actualRoomId = useParams()['*']
+    const roomId = actualRoomId === "demo" ? mport.meta.env.VITE_DEMO_API : actualRoomId;
+
     const { user } = useSelector((state) => state.user);
     const { library, playlist, playlistCache } = useSelector((state) => state.library);
 

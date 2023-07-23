@@ -7,7 +7,7 @@ const LoginButton = () => {
     
     return (
         <a href={`${import.meta.env.VITE_SERVER_URL}/auth/login?${queryString}`}>
-            <button className="rounded-full bg-green-600 px-6 py-3.5 text-white duration-150 hover:bg-green-500 active:bg-green-700">
+            <button className="rounded-full bg-green-600 px-8 py-4 text-white duration-150 hover:bg-green-500 active:bg-green-700 text-lg">
                 Login
             </button>
         </a>
