@@ -4,7 +4,7 @@ import Faq from './components/Faq';
 
 const HomeView = () => {
     return (
-        <div className="flex-col">
+        <div className="flex-col mx-4">
             <div className="my-32">
                 <h1 className="my-16 text-5xl">Spotify for Car</h1>
                 <div className="my-2">
