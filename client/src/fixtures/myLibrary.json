@@ -3,42 +3,6 @@
     "items": [
         {
             "collaborative": false,
-            "description": "A blend of music for Orson and kimberly. Updates daily.",
-            "external_urls": {
-                "spotify": "https://open.spotify.com/playlist/37i9dQZF1EJHf84ZqxIOpY"
-            },
-            "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EJHf84ZqxIOpY",
-            "id": "37i9dQZF1EJHf84ZqxIOpY",
-            "images": [
-                {
-                    "height": null,
-                    "url": "https://blend-playlist-covers.spotifycdn.com/v2/blend_LARGE-forest-seafoam-en.jpg",
-                    "width": null
-                }
-            ],
-            "name": "kimberly + Orson",
-            "owner": {
-                "display_name": "Spotify",
-                "external_urls": {
-                    "spotify": "https://open.spotify.com/user/spotify"
-                },
-                "href": "https://api.spotify.com/v1/users/spotify",
-                "id": "spotify",
-                "type": "user",
-                "uri": "spotify:user:spotify"
-            },
-            "primary_color": null,
-            "public": false,
-            "snapshot_id": "MCwwMDAwMDAwMDU4ZDExNDdjZjNjNDRhMTVkOWU4YTFjY2U1YzU2ZWIz",
-            "tracks": {
-                "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EJHf84ZqxIOpY/tracks",
-                "total": 50
-            },
-            "type": "playlist",
-            "uri": "spotify:playlist:37i9dQZF1EJHf84ZqxIOpY"
-        },
-        {
-            "collaborative": false,
             "description": "So excited for Sanctuary Live! Here's some songs you can expect to hear on tour!",
             "external_urls": {
                 "spotify": "https://open.spotify.com/playlist/1taO9EsUeglshYPlw5AHpE"
@@ -390,42 +354,6 @@
             },
             "type": "playlist",
             "uri": "spotify:playlist:37i9dQZF1EjpGdmLBVG1C7"
-        },
-        {
-            "collaborative": false,
-            "description": "A blend of music for Orson, agnes, 12162336543, Bryan, and 4 others. Updates daily.",
-            "external_urls": {
-                "spotify": "https://open.spotify.com/playlist/37i9dQZF1EJy7zd4d3wQrK"
-            },
-            "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EJy7zd4d3wQrK",
-            "id": "37i9dQZF1EJy7zd4d3wQrK",
-            "images": [
-                {
-                    "height": null,
-                    "url": "https://blend-playlist-covers.spotifycdn.com/group-blends-v1/group-blend-blue-2-LARGE-en.jpg",
-                    "width": null
-                }
-            ],
-            "name": "Orson + 7 others",
-            "owner": {
-                "display_name": "Spotify",
-                "external_urls": {
-                    "spotify": "https://open.spotify.com/user/spotify"
-                },
-                "href": "https://api.spotify.com/v1/users/spotify",
-                "id": "spotify",
-                "type": "user",
-                "uri": "spotify:user:spotify"
-            },
-            "primary_color": null,
-            "public": false,
-            "snapshot_id": "MCwwMDAwMDAwMGUzNGUzM2ZhYTRmZGNmMGZlYTUwNDY0ZGExNmFiYTMx",
-            "tracks": {
-                "href": "https://api.spotify.com/v1/playlists/37i9dQZF1EJy7zd4d3wQrK/tracks",
-                "total": 50
-            },
-            "type": "playlist",
-            "uri": "spotify:playlist:37i9dQZF1EJy7zd4d3wQrK"
         }
     ],
     "limit": 50,

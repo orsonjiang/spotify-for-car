@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import LIKED_SONGS from "../../../../assets/liked-songs.png"
 import { LOADING_VIEW, SUCCESS_VIEW } from '../../../../constants/alertTypes';
 import { runAlert } from "../../../../helpers/alert";
-import { setAddedSong, setQueue, setPlaylist, addPlaylistCache, setAlert, clearAlert } from '../../../../actions';
+import { setAddedSong, setQueue, setPlaylist, addPlaylistCache, setAlert, clearAlert, setDemoPlaylist } from '../../../../actions';
 import store from '../../../../store';
 import api from "../../../../api/api";
 import auth from '../../../../api/authApi';
@@ -16,7 +16,7 @@ const LibraryView = () => {
     const roomId = useParams()['*']
 
     const { user } = useSelector((state) => state.user);
-    const { library, playlist, playlistCache } = useSelector((state) => state.library);
+    const { library, playlist, playlistCache } = roomId === "demo" ? useSelector((state) => state.demo.library) : useSelector((state) => state.library);
 
     const fullLibrary = [{
         id: "liked",
@@ -38,14 +38,23 @@ const LibraryView = () => {
         if (playlistCache[id] != null) {
             data = playlistCache[id];
         } else {
+            // Should never get to this step because all demo playlist are stored in playlistCache.
+            if (roomId === "demo") {
+                return;
+            }
+
+            /* Regular Routines */
             store.dispatch(setAlert("Playlist Loading", "If you have a lot of songs in your playlist, this might take a second.", LOADING_VIEW))
             const res = await auth.getPlaylist(id);
             data = res.data;
             store.dispatch(clearAlert());
             store.dispatch(addPlaylistCache(id, res.data));
         }
+
+
+        const setPlaylistFunc = roomId === "demo" ? setDemoPlaylist : setPlaylist;
         store.dispatch(
-            setPlaylist({
+            setPlaylistFunc({
                 name: id === "liked" ? "Liked Songs" : fullLibrary.filter((playlist) => playlist.id == id)[0].name,
                 songs: data,
             })
