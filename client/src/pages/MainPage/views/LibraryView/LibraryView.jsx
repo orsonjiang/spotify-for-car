@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import LIKED_SONGS from "../../../../assets/liked-songs.png"
 import { LOADING_VIEW, SUCCESS_VIEW } from '../../../../constants/alertTypes';
 import { runAlert } from "../../../../helpers/alert";
-import { setAddedSong, setQueue, setPlaylist, addPlaylistCache, setAlert, clearAlert, setDemoPlaylist } from '../../../../actions';
+import { setAddedSong, setQueue, setPlaylist, addPlaylistCache, setAlert, clearAlert, setDemoPlaylist, addToDemoQueue } from '../../../../actions';
 import store from '../../../../store';
 import api from "../../../../api/api";
 import auth from '../../../../api/authApi';
@@ -65,6 +65,17 @@ const LibraryView = () => {
     const handleAddSong = async (song) => {
         const trackId = song.id;
         const trackName = song.name;
+
+        /* Demo Routines */
+        if (roomId === "demo") {
+            runAlert("Song Added", `${trackName} has been added to the queue!`, SUCCESS_VIEW);
+
+            store.dispatch(addToDemoQueue(song));
+            store.dispatch(setAddedSong(trackId));
+            return;
+        }
+
+        /* Regular Routines */
         let addSong = await api.addToQueue(roomId, trackId);
         if (addSong.status == 200) {
             runAlert("Song Added", `${trackName} has been added to the queue!`, SUCCESS_VIEW);
