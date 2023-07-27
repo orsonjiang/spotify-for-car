@@ -13,8 +13,7 @@ import SongCard from '../../components/SongCard';
 import LoginButton from '../../components/LoginButton';
 
 const LibraryView = () => {
-    const actualRoomId = useParams()['*']
-    const roomId = actualRoomId === "demo" ? import.meta.env.VITE_DEMO_API : actualRoomId;
+    const roomId = useParams()['*']
 
     const { user } = useSelector((state) => state.user);
     const { library, playlist, playlistCache } = useSelector((state) => state.library);
@@ -54,7 +53,9 @@ const LibraryView = () => {
         
     };
 
-    const handleAddSong = async (trackId, trackName) => {
+    const handleAddSong = async (song) => {
+        const trackId = song.id;
+        const trackName = song.name;
         let addSong = await api.addToQueue(roomId, trackId);
         if (addSong.status == 200) {
             runAlert("Song Added", `${trackName} has been added to the queue!`, SUCCESS_VIEW);

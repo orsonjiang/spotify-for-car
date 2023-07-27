@@ -1,5 +1,7 @@
 export const SET_ALERT = "SET_ALERT";
 
+export const INC_QUEUE_INDEX = "INC_QUEUE_INDEX";
+
 export const SET_PLAYLIST = "SET_PLAYLIST";
 export const SET_LIBRARY = "SET_LIBRARY";
 export const ADD_PLAYLIST_CACHE = "ADD_PLAYLIST_CACHE";

@@ -40,6 +40,7 @@ const MainPage = () => {
     const { globalView } = useSelector((state) => state.view);
 
     useEffect(() => {
+        /* Demo Routines */
         if (roomId === "demo") {
             store.dispatch(setView(VIEW_QUEUE));
             store.dispatch(setRoom(room));
@@ -47,6 +48,7 @@ const MainPage = () => {
             return;
         }
         
+        /* Regular Routines */
         if (user.displayName === "") {
             fetchUser().then(fetchLibrary());
         }

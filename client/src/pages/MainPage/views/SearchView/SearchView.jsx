@@ -8,6 +8,7 @@ import {
     setSearchResults,
     setAddedSong,
     setQueue,
+    incQueueIndex,
 } from '../../../../actions';
 import store from '../../../../store';
 import api from '../../../../api/api';
@@ -16,10 +17,11 @@ import Navbar from '../../components/Navbar';
 import SongCard from '../../components/SongCard';
 
 const SearchView = () => {
-    const actualRoomId = useParams()['*']
-    const roomId = actualRoomId === "demo" ? import.meta.env.VITE_DEMO_API : actualRoomId;
+    const roomId = useParams()['*']
 
     const { results } = useSelector((state) => state.search);
+    const queueData = useSelector((state) => state.queue);
+    const { queueIndex } = useSelector((state) => state.demo);
 
     const [searchText, setSearchText] = useState("");
 
@@ -37,10 +39,25 @@ const SearchView = () => {
         store.dispatch(setSearchResults(search.data.tracks.items));
     };
 
-    const handleAddSong = async (trackId, trackName) => {
-        if (actualRoomId === "demo") {
+    const handleAddSong = async (song) => {
+        const trackId = song.id;
+        const trackName = song.name;
+
+        /* Demo Routines */
+        if (roomId === "demo") {
+            setSearchText("");
+            runAlert("Song Added", `${trackName} has been added to the queue!`, SUCCESS_VIEW);
+
+            const tempQueueData = JSON.parse(JSON.stringify(queueData));;
+            tempQueueData.queue.splice(queueIndex, 0, song)
+        
+            store.dispatch(incQueueIndex());
+            store.dispatch(setQueue(tempQueueData));
+            store.dispatch(setAddedSong(trackId));
             return;
         }
+
+        /* Regular Routines */
         setSearchText("");
         let addSong = await api.addToQueue(roomId, trackId);
         if (addSong.status == 200) {
