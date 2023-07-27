@@ -30,7 +30,6 @@ import {
 } from '../../helpers/fetch';
 import { LOADING_VIEW } from '../../constants/alertTypes';
 
-import queue from "../../fixtures/queue.json";
 import room from "../../fixtures/room.json";
 
 const MainPage = () => {
@@ -44,7 +43,6 @@ const MainPage = () => {
         if (roomId === "demo") {
             store.dispatch(setView(VIEW_QUEUE));
             store.dispatch(setRoom(room));
-            store.dispatch(setQueue(queue));
             return;
         }
         

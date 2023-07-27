@@ -1,6 +1,6 @@
 import {
 	SET_ALERT,
-	INC_QUEUE_INDEX,
+	ADD_TO_DEMO_QUEUE,
 	SET_PLAYLIST,
 	SET_LIBRARY,
 	ADD_PLAYLIST_CACHE,
@@ -32,9 +32,9 @@ export const clearAlert = () => ({
 	}
 })
 
-export const incQueueIndex = () => ({
-	type: INC_QUEUE_INDEX,
-	payload: {}
+export const addToDemoQueue = (song) => ({
+	type: ADD_TO_DEMO_QUEUE,
+	payload: song,
 })
 
 export const setPlaylist = (playlist) => ({

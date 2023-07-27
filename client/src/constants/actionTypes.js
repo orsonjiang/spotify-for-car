@@ -1,6 +1,6 @@
 export const SET_ALERT = "SET_ALERT";
 
-export const INC_QUEUE_INDEX = "INC_QUEUE_INDEX";
+export const ADD_TO_DEMO_QUEUE = "ADD_TO_DEMO_QUEUE";
 
 export const SET_PLAYLIST = "SET_PLAYLIST";
 export const SET_LIBRARY = "SET_LIBRARY";

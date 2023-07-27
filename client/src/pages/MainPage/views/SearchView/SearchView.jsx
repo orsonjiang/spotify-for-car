@@ -8,7 +8,7 @@ import {
     setSearchResults,
     setAddedSong,
     setQueue,
-    incQueueIndex,
+    addToDemoQueue,
 } from '../../../../actions';
 import store from '../../../../store';
 import api from '../../../../api/api';
@@ -48,11 +48,7 @@ const SearchView = () => {
             setSearchText("");
             runAlert("Song Added", `${trackName} has been added to the queue!`, SUCCESS_VIEW);
 
-            const tempQueueData = JSON.parse(JSON.stringify(queueData));;
-            tempQueueData.queue.splice(queueIndex, 0, song)
-        
-            store.dispatch(incQueueIndex());
-            store.dispatch(setQueue(tempQueueData));
+            store.dispatch(addToDemoQueue(song));
             store.dispatch(setAddedSong(trackId));
             return;
         }
