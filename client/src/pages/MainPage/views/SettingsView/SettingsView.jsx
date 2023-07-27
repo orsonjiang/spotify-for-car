@@ -22,9 +22,6 @@ const SettingsView = () => {
         }
     };
 
-    console.log(user)
-    console.log(owner_id)
-
     let content;
     const profile = user.picture_url || DEFAULT_PROFILE;
 
