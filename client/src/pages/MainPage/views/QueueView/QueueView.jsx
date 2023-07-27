@@ -22,7 +22,7 @@ const QueueView = () => {
         return () => clearInterval(interval);
     }, []);
 
-    const queueData = roomId === "demo" ? useSelector((state) => state.demo) : useSelector((state) => state.queue);
+    const queueData = roomId === "demo" ? useSelector((state) => state.demo.queue) : useSelector((state) => state.queue);
 
     let i = 0;
     let CurrentView = '';

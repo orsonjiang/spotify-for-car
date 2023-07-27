@@ -2,8 +2,10 @@ import { ADD_TO_DEMO_QUEUE } from "../constants/actionTypes";
 import queueData from "../fixtures/queue.json";
 
 const initialState = {
-	... queueData,
 	queueIndex: 0,
+	queue: {
+		...queueData,
+	},
 }
 
 const demo = (state = initialState, action) => {
@@ -11,12 +13,15 @@ const demo = (state = initialState, action) => {
 		case ADD_TO_DEMO_QUEUE:
 			return {
 				...state,
-				queue: [
-					...state.queue.slice(0, state.queueIndex),
-					action.payload,
-					...state.queue.slice(state.queueIndex),
-				],
-				queueIndex: state.queueIndex+1
+				queueIndex: state.queueIndex+1,
+				queue: {
+					...state.queue,
+					queue: [
+						...state.queue.queue.slice(0, state.queueIndex),
+						action.payload,
+						...state.queue.queue.slice(state.queueIndex),
+					],
+				},
 			}
 
 		default:
