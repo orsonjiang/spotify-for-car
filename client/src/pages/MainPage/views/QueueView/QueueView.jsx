@@ -10,13 +10,19 @@ const QueueView = () => {
     const roomId = useParams()['*'];
 
     useEffect(() => {
+        /* Demo Routines */
+        if (roomId === "demo") {
+            return;
+        }
+
+        /* Regular Routines */
         const interval = setInterval(() => {
             fetchQueue(roomId);
         }, 2000);
         return () => clearInterval(interval);
     }, []);
 
-    const queueData = useSelector((state) => state.queue);
+    const queueData = roomId === "demo" ? useSelector((state) => state.demo.queue) : useSelector((state) => state.queue);
 
     let i = 0;
     let CurrentView = '';

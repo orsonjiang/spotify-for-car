@@ -15,7 +15,7 @@ const SongCard = (props) => {
         <li
             key={song.id}
             className={className}
-            onClick={onClick ? () => onClick(song.id, song.name) : undefined}
+            onClick={onClick ? () => onClick(song) : undefined}
         >
 			<AlbumCover album={song.album}/>
             <div className="mt-2 flex flex-col text-left mr-2 overflow-clip">

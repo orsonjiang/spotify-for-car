@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import LIKED_SONGS from "../../../../assets/liked-songs.png"
 import { LOADING_VIEW, SUCCESS_VIEW } from '../../../../constants/alertTypes';
 import { runAlert } from "../../../../helpers/alert";
-import { setAddedSong, setQueue, setPlaylist, addPlaylistCache, setAlert, clearAlert } from '../../../../actions';
+import { setAddedSong, setQueue, setPlaylist, addPlaylistCache, setAlert, clearAlert, setDemoPlaylist, addToDemoQueue } from '../../../../actions';
 import store from '../../../../store';
 import api from "../../../../api/api";
 import auth from '../../../../api/authApi';
@@ -13,11 +13,10 @@ import SongCard from '../../components/SongCard';
 import LoginButton from '../../components/LoginButton';
 
 const LibraryView = () => {
-    const actualRoomId = useParams()['*']
-    const roomId = actualRoomId === "demo" ? import.meta.env.VITE_DEMO_API : actualRoomId;
+    const roomId = useParams()['*']
 
     const { user } = useSelector((state) => state.user);
-    const { library, playlist, playlistCache } = useSelector((state) => state.library);
+    const { library, playlist, playlistCache } = roomId === "demo" ? useSelector((state) => state.demo.library) : useSelector((state) => state.library);
 
     const fullLibrary = [{
         id: "liked",
@@ -39,14 +38,23 @@ const LibraryView = () => {
         if (playlistCache[id] != null) {
             data = playlistCache[id];
         } else {
+            // Should never get to this step because all demo playlist are stored in playlistCache.
+            if (roomId === "demo") {
+                return;
+            }
+
+            /* Regular Routines */
             store.dispatch(setAlert("Playlist Loading", "If you have a lot of songs in your playlist, this might take a second.", LOADING_VIEW))
             const res = await auth.getPlaylist(id);
             data = res.data;
             store.dispatch(clearAlert());
             store.dispatch(addPlaylistCache(id, res.data));
         }
+
+
+        const setPlaylistFunc = roomId === "demo" ? setDemoPlaylist : setPlaylist;
         store.dispatch(
-            setPlaylist({
+            setPlaylistFunc({
                 name: id === "liked" ? "Liked Songs" : fullLibrary.filter((playlist) => playlist.id == id)[0].name,
                 songs: data,
             })
@@ -54,7 +62,20 @@ const LibraryView = () => {
         
     };
 
-    const handleAddSong = async (trackId, trackName) => {
+    const handleAddSong = async (song) => {
+        const trackId = song.id;
+        const trackName = song.name;
+
+        /* Demo Routines */
+        if (roomId === "demo") {
+            runAlert("Song Added", `${trackName} has been added to the queue!`, SUCCESS_VIEW);
+
+            store.dispatch(addToDemoQueue(song));
+            store.dispatch(setAddedSong(trackId));
+            return;
+        }
+
+        /* Regular Routines */
         let addSong = await api.addToQueue(roomId, trackId);
         if (addSong.status == 200) {
             runAlert("Song Added", `${trackName} has been added to the queue!`, SUCCESS_VIEW);

@@ -1,5 +1,6 @@
 import {
 	SET_ALERT,
+	ADD_TO_DEMO_QUEUE,
 	SET_PLAYLIST,
 	SET_LIBRARY,
 	ADD_PLAYLIST_CACHE,
@@ -9,6 +10,7 @@ import {
 	SET_ADDED_SONG,
 	SET_USER,
 	SET_VIEW,
+	SET_DEMO_PLAYLIST,
 } from "../constants/actionTypes";
 
 export const setAlert = (title, message, type) => ({
@@ -29,6 +31,16 @@ export const clearAlert = () => ({
 		type: "",
 		isVisible: false,
 	}
+})
+
+export const addToDemoQueue = (song) => ({
+	type: ADD_TO_DEMO_QUEUE,
+	payload: song,
+})
+
+export const setDemoPlaylist = (playlist) => ({
+	type: SET_DEMO_PLAYLIST,
+	payload: playlist,
 })
 
 export const setPlaylist = (playlist) => ({

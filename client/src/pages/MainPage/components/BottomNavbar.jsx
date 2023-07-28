@@ -1,7 +1,8 @@
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import store from '../../../store';
-import { setView, setPlaylist } from '../../../actions';
+import { setView, setPlaylist, setDemoPlaylist } from '../../../actions';
 import {
     VIEW_QUEUE,
     VIEW_SEARCH,
@@ -10,11 +11,14 @@ import {
 } from '../../../constants/viewTypes';
 
 const BottomNavbar = () => {
-    const { playlist } = useSelector((state) => state.library);
+    const roomId = useParams()['*'];
+
+    const { playlist } = roomId === "demo" ? useSelector((state) => state.demo.library) : useSelector((state) => state.library);
     const { globalView } = useSelector((state) => state.view);
 
     const handleClearPlaylist = () => {
-        store.dispatch(setPlaylist([]));
+        const setPlaylistFunc = roomId === "demo" ? setDemoPlaylist : setPlaylist;
+        store.dispatch(setPlaylistFunc([]));
     };
 
     const generateButtonClass = (view) => (globalView === view ? " text-green-600 dark:text-green-500" : " text-gray-500 dark:text-gray-400");
