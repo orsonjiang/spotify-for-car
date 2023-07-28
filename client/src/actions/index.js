@@ -43,7 +43,6 @@ export const setDemoPlaylist = (playlist) => ({
 	payload: playlist,
 })
 
-
 export const setPlaylist = (playlist) => ({
 	type: SET_PLAYLIST,
 	payload: playlist
