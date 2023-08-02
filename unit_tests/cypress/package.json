@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "client": "cd ../../client && npm ci && npm run dev",
+    "client": "cd ../../client && npm ci && npm run test",
     "server": "cd ../../server && npm ci && npm start"
   },
   "devDependencies": {
