@@ -3,12 +3,12 @@ const qs = require('qs');
 const User = require("../models/user-model");
 const auth = require("../auth");
 const api = require("../api/spotify");
-const crypto = require("crypto");
+const { randomBytes } = require("node:crypto");
 
 require('dotenv').config();
 
 const login = (req, res) => {
-    const state = crypto.randomBytes(16).toString('hex');
+    const state = randomBytes(16).toString('hex');
     res.cookie(state, JSON.stringify({
         location: req.query.location
     }));

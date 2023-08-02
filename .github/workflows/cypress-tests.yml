@@ -1,0 +1,39 @@
+name: Cypress Tests
+
+on: push
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-22.04
+    environment: preview
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Make client envfile
+        uses: SpicyPizza/create-envfile@v2.0
+        with:
+          directory: client
+          envkey_VITE_CLIENT_ID: ${{ secrets.VITE_CLIENT_ID }}
+          envkey_VITE_CLIENT_URL: ${{ secrets.VITE_CLIENT_URL }}
+          envkey_VITE_SERVER_URL: ${{ secrets.VITE_SERVER_URL }}
+          envkey_VITE_DEMO_API: ${{ secrets.VITE_DEMO_API }}
+
+      - name: Make server envfile
+        uses: SpicyPizza/create-envfile@v2.0
+        with:
+          directory: server
+          envkey_PORT: ${{ secrets.PORT }}
+          envkey_CLIENT_URL: ${{ secrets.CLIENT_URL }}
+          envkey_SERVER_URL: ${{ secrets.SERVER_URL }}
+          envkey_CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          envkey_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          envkey_JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          envkey_DB_CONNECT: ${{ secrets.DB_CONNECT }}
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v5
+        with:
+          start: npm run client, npm run server
+          working-directory: unit_tests/cypress
+          wait-on: ${{ secrets.CYPRESS_CLIENT_URL }}
