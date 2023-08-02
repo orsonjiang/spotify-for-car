@@ -14,4 +14,4 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           start: npm run client, npm run server
-          working-directory: client
+          working-directory: unit_tests/cypress
