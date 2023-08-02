@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "client": "cd ../../client && npm ci && npm run dev",
-    "server": "cd ../../server && npm ci && npm run dev"
+    "server": "cd ../../server && npm ci && npm start"
   },
   "devDependencies": {
     "cypress": "^12.17.3"
