@@ -32,7 +32,7 @@ jobs:
           env_vars: |-
             CLIENT_URL=${{ vars.CLIENT_URL }}
             SERVER_URL=${{ vars.SERVER_URL }}
-            DB_CONNECT='${{ secrets.DB_CONNECT }}'
+            DB_CONNECT=${{ secrets.DB_CONNECT }}
             CLIENT_ID=${{ secrets.CLIENT_ID }}
             CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}
-            JWT_SECRET='${{ secrets.JWT_SECRET }}'
+            JWT_SECRET=${{ secrets.JWT_SECRET }}
