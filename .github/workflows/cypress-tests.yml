@@ -5,17 +5,13 @@ on: push
 jobs:
   cypress-run:
     runs-on: ubuntu-22.04
+    environment: preview
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
       - name: Cypress run
         uses: cypress-io/github-action@v5
-        env:
-          CYPRESS_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
-          CYPRESS_CLIENT_URL: ${{ secrets.DEV_CLIENT_URL }}
-          CYPRESS_SERVER_URL: ${{ secrets.DEV_SERVER_URL }}
-          CYPRESS_DEMO_API: ${{ secrets.DEV_DEMO_API }}
         with:
-          start: npm run dev
+          start: npm run client, npm run server
           working-directory: client
