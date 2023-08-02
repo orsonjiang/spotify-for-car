@@ -101,16 +101,18 @@ const SearchView = () => {
     const CurrentView = searchText && results.length ? (
         <div className="m-auto max-w-lg flex-col justify-center">
             <div className="mt-4 mb-2 text-3xl">Search Results</div>
-            {results.map((song) => {
-                return (
-                    <SongCard
-                        key={'search-' + song.id}
-                        song={song}
-                        onClick={handleAddSong}
-                    />
-                );
-            })}
-        </div>
+            <ul>
+                {results.map((song) => {
+                    return (
+                        <SongCard
+                            key={'search-' + song.id}
+                            song={song}
+                            onClick={handleAddSong}
+                        />
+                    );
+                })}
+            </ul>
+            </div>
     ) : (
         ''
     );

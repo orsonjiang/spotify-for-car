@@ -31,7 +31,9 @@ const QueueView = () => {
             <div className="m-auto max-w-lg flex-col justify-center">
                 <div>
                     <div className="mt-4 mb-2 text-3xl">Current Song</div>
-                    {<SongCard song={queueData.currentSong} />}
+                    <ul>
+                        {<SongCard song={queueData.currentSong} />}
+                    </ul>
                 </div>
                 <div>
                     <div className="mt-4 mb-2 text-3xl">Current Queue</div>
