@@ -35,4 +35,4 @@ jobs:
         with:
           start: npm run client, npm run server
           working-directory: unit_tests/cypress
-          wait-on: ${{ secrets.CYPRESS_CLIENT_URL }}
+          wait-on: ${{ secrets.CLIENT_URL }}, ${{ secrets.SERVER_URL }}
