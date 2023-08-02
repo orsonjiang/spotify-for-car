@@ -2,9 +2,10 @@
   "name": "cypress",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "client": "cd ../../client && npm run dev",
-    "server": "cd ../../server && npm run dev"
+    "client": "cd ../../client && npm ci && npm run dev",
+    "server": "cd ../../server && npm ci && npm run dev"
   },
   "devDependencies": {
     "cypress": "^12.17.3"
