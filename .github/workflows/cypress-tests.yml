@@ -33,5 +33,7 @@ jobs:
         with:
           working-directory: unit_tests/cypress
           start: npm run app
-          wait-on: http://localhost:3000
+          # 127.0.0.1, not localhost: the action only retries ECONNREFUSED-style errors, and
+          # localhost (IPv6 + IPv4) fails with a different error that aborts the wait immediately.
+          wait-on: http://127.0.0.1:3000
           wait-on-timeout: 300
