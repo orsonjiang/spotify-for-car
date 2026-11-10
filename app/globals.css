@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+/*
+  Tailwind CSS v3 compatibility (from the v4 upgrade guide), so the UI ported from the old Tailwind v3 client
+  looks the same. Dark mode stays on the v4 default (`prefers-color-scheme`), like the old `darkMode: 'media'`.
+*/
+@layer base {
+  /* v4 changed the default border color to `currentcolor`; v3 used gray-200. */
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+
+  /* v4 placeholders use the text color at 50% opacity; v3 used gray-400. */
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-gray-400);
+  }
+
+  /* v4 buttons use the default cursor; v3 used a pointer. */
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
