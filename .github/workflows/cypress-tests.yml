@@ -28,12 +28,25 @@ jobs:
           envkey_DB_CONNECT: ${{ secrets.DB_CONNECT }}
           envkey_APP_URL: http://localhost:3000
 
+      - name: Install app dependencies
+        run: npm ci
+
+      - name: Build app
+        run: npm run build
+
+      # Started here rather than with the Cypress action's start/wait-on: its ping gives up on the
+      # first ERR_SOCKET_CLOSED_BEFORE_CONNECTION (raised while the server is still down) instead of retrying.
+      - name: Start app
+        run: |
+          nohup npm start > "$RUNNER_TEMP/next.log" 2>&1 &
+          timeout 60 bash -c 'until curl -s -o /dev/null http://127.0.0.1:3000; do sleep 1; done' \
+            || { cat "$RUNNER_TEMP/next.log"; exit 1; }
+
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
           working-directory: unit_tests/cypress
-          start: npm run app
-          # 127.0.0.1, not localhost: the action only retries ECONNREFUSED-style errors, and
-          # localhost (IPv6 + IPv4) fails with a different error that aborts the wait immediately.
-          wait-on: http://127.0.0.1:3000
-          wait-on-timeout: 300
+
+      - name: App server log
+        if: always()
+        run: cat "$RUNNER_TEMP/next.log" || true
